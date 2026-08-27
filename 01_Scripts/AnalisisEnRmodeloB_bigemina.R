@@ -1,14 +1,18 @@
+########################################################################################
+######################### MODELO INICIAL BABESIA BIGEMINA ##############################
+########################################################################################
 
-################## MODELO INICIAL BABESIA BIGEMINA #####################
+#### Definiendo el sistema
 
+## Paquetes necesarios para empezar el trabajo ##
 source("01_Scripts/Grind.R")
 library(phaseR)
 library(deSolve)
 library(plotly)
 
-par(mfrow = c(1,1))
+# par(mfrow = c(1,1)) opcional para trabajar en una correcta configuracion de graficas.
 
-## Modelo
+## Modelo inicial, se plantea de forma simbolica.
 model <- function(t,state,parms){
   
   with(as.list(c(state,parms)),{
@@ -22,7 +26,7 @@ model <- function(t,state,parms){
   })
 }
 
-## Parametros 
+## Parametros, las primeras simulaciones seran sin tasas de introduccion.
 p <- c(
   alfa  = 0,
   beta  = 0.005,
@@ -46,11 +50,13 @@ run(tmax = 100, tstep = 0.001, state = s, parms = p, odes = model)
 dev.off()
 s <- c(x = 1, y = 1, z = 1)
 
+## Busqueda numerica de puntos de equilibrio.
 plane(xmin=-5,xmax=5, ymin = -20,ymax = 5)
 first <- newton(s,plot=T)
 second <- newton(c(x = 100, y = 100, z = 100),plot=T)
 third <- newton(c(x = 0, y = -20, z = 0),plot=T)
 
+## Analisis de bifurcaciones de los primeros puntos de equilibrio.
 continue(state=first, parms = p, odes=model, x="beta", step=0.001, 
          xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
 continue(state=first, parms = p, odes=model, x="beta", step=0.001, 
@@ -109,6 +115,12 @@ continue(state=third, parms = p, odes=model, x="omega", step=0.001,
          xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
 continue(state=third, parms = p, odes=model, x="omega", step=0.001, 
          xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
+
+########################################################################################
+##################### MODELO con constantes BABESIA BIGEMINA ###########################
+########################################################################################
+
+## Definimos simbolicamente
 
 model <- function(t,state,parms){
   
@@ -123,7 +135,7 @@ model <- function(t,state,parms){
   })
 }
 
-## Parametros 
+## Parametros, ahora con las tasas de introduccion como constantes
 p <- c(
   alfa  = 0.25,
   beta  = 0.005,
@@ -147,14 +159,6 @@ run(tmax = 75, tstep = 0.01, state = s, parms = p, odes = model)
 run(tmax = 500, tstep = 0.01, state = s, parms = p, odes = model)
 run(tmax = 1000, tstep = 0.01, state = s, parms = p, odes = model)
 dev.off()
-
-times <- seq(0,100,0.01)
-out <- ode(
-  y=s,
-  times=times,
-  func=model,
-  parms=p
-)
 
 ###### Ciclo para obtener valores maximos y analisis de picos #############
 data <- data.frame(
@@ -399,6 +403,9 @@ write.csv(data2, "./datos_maximosrandom.csv")
 ## Datos de maximos al variar los parametros
 data2 <- read.csv("03_Data/datos_maximosrandom.csv")
 
+
+### Vamos a realizar el LHS, aqui queremos definir intervalos especificos, muestrear dentro de estos 
+### intervalos y a partir de ahi 
 inter <- list()
 valores <- list()
 for (i in 1:100) {
