@@ -454,6 +454,3 @@ write.csv(interv,"03_Data/Intervalos.csv")
 write.csv(muestreo, "03_Data/DatosMuestreoLHS.csv")
 write.csv(muestreo2, "03_Data/ListaRemplazos.csv")
 write.csv(valfin, "03_Data/LHSParametrosAleatorios.csv")
-
-
-write.csv(valfin, "03_Data/LHSParametrosAleatorios.csv")
