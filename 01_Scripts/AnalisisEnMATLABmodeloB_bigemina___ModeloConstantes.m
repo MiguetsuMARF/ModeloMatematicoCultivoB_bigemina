@@ -143,10 +143,16 @@ eq1 = alfa - beta.*B.*E - omega.*B + mu.*(rho.*(1 + psi).*I);
 eq2 = gamma - beta.*B.*E - rho.*E;
 eq3 = beta.*B.*E - rho.*(1 + psi).*I;
 
+%%
+
 [Bsol,Esol,Isol] = solve([eq1,eq2,eq3],[B,E,I]);
 Bsol
 Esol
 Isol
+
+equil = [Bsol Esol Isol];
+
+disp(equil)
 
 alfa = 0.25;
 beta  = 0.005;
@@ -166,11 +172,60 @@ x0 = [2 500 0];
 
 xeq = fsolve(F,x0);
 
-xeq
+%% Analisis de estabilidad de puntos de equilibrio
+
+syms alfa gamma beta omega rho mu psi B E I 
+
+eq1 = alfa - beta.*B.*E - omega.*B + mu.*(rho.*(1 + psi).*I);
+eq2 = gamma - beta.*B.*E - rho.*E;
+eq3 = beta.*B.*E - rho.*(1 + psi).*I;
+
+Modelo = [eq1; eq2; eq3];
+vars = [B E I];
+
+Jacobiano = jacobian(Modelo, vars);
+
+Jacobiano
+
+% Primero equilibrio
+
+Jacobiano_eq1 = subs(Jacobiano, [B E I], [Bsol(1) Esol(1) Isol(1)]);
+
+Jacobiano_eq1
+
+eigenvalues_eq1 = eig(Jacobiano_eq1);
+eigenvalues_eq1
+
+% Segundo equilibrio
+
+Jacobiano_eq2 = subs(Jacobiano, [B E I], [Bsol(2) Esol(2) Isol(2)]);
+
+Jacobiano_eq2
+
+eigenvalues_eq2 = eig(Jacobiano_eq2);
+eigenvalues_eq2
+
+%%
+
+alfa = 0.25;
+beta  = 0.005;
+omega = 1/3;
+gamma = 0.15;
+rho   = 1/25;
+mu    = 5;
+psi   = 2;
+
+F = @(x) [
+    alfa - beta.*x(1).*x(2) - omega.*x(1) + mu.*(rho.*(1 + psi).*x(3));
+    gamma - beta.*x(1).*x(2) - rho.*x(2);
+    beta.*x(1).*x(2) - rho.*(1 + psi).*x(3)
+    ];
+
+x0 = [2 500 0];
 
 ode = @(t,x)[
-    - beta.*x(1).*x(2) - omega.*x(1) + mu.*(rho.*(1 + psi).*x(3));
-    - beta.*x(1).*x(2) - rho.*x(2);
+    alfa - beta.*x(1).*x(2) - omega.*x(1) + mu.*(rho.*(1 + psi).*x(3));
+    gamma - beta.*x(1).*x(2) - rho.*x(2);
     beta.*x(1).*x(2) - rho.*(1 + psi).*x(3)
     ];
 
