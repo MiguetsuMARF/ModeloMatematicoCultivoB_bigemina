@@ -224,7 +224,8 @@ ggplot(data, aes(x = V2, y = V3, color = V1)) +
         y = "Valor maximo de poblacion infectada",
         color = "Parametro",
         title = "Parametros vs Valor maximo de parasitos",
-        caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el modelo base para obtener los valores maximos de infeccion.")
+        caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el 
+        modelo base para obtener los valores maximos de infeccion.")
 
 # Color alternativo
 
@@ -234,7 +235,8 @@ ggplot(data, aes(x = V2, y = V3, color = V1)) +
         y = "Valor maximo de poblacion infectada",
         color = "Parametro",
         title = "Parametros vs Valor maximo de parasitos",
-        caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el modelo base para obtener los valores maximos de infeccion.") +
+        caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el 
+        modelo base para obtener los valores maximos de infeccion.") +
   scale_color_manual (
     values = c(
       "green", 
@@ -257,8 +259,10 @@ for(i in 1:length(unique(data$V1))){
            geom_line(linewidth = 1.2) + 
            labs (x = paste("Valor del parametro ", para),
                  y = "Valor maximo de poblacion infectada",
-                 title = paste("Parametros vs Valor maximo de parasitos para: ", para),
-                 caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el modelo base para obtener los valores maximos de infeccion.")
+                 title = paste(
+                   "Parametros vs Valor maximo de parasitos para: ", para),
+                 caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo 
+                 el modelo base para obtener los valores maximos de infeccion.")
   )
 }
 
@@ -270,7 +274,8 @@ ggplot(data, aes(x = V2, y = V4, color = V1)) +
         y = "Tiempo para llegar al valor maximo de infectados",
         color = "Parametro",
         title = "Parametros vs tiempo de valor maximo de infectados",
-        caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el modelo base para obtener los valores maximos de infeccion y el tiempo de llegada.")
+        caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo 
+        el modelo base para obtener los valores maximos de infeccion y el tiempo de llegada.")
 
 # Graficas individuales vs el valor maximo 
 
@@ -282,7 +287,8 @@ for(i in 1:length(unique(data$V1))){
     labs(
       x = NULL,
       y = "maximo de infeccion",
-      title = paste("Parametro vs tiempo de valor maximo de infectados para: ", para)
+      title = paste(
+        "Parametro vs tiempo de valor maximo de infectados para: ", para)
     )
   
   tiempomax <- ggplot(datafor, aes(x = V2, y = V4)) +
@@ -306,7 +312,8 @@ ggplot(data, aes(x = V2, y = V5, color = V1)) +
         y = "Tiempo para superar valor",
         color = "Parametro",
         title = "Parametros vs tiempo de mayor infectados",
-        caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el modelo base para obtener el tiempo en el que se supera la infeccion"
+        caption = "Dentro del intervalo del 0 al 25 por 0.1 
+        se evaluo el modelo base para obtener el tiempo en el que se supera la infeccion"
   )
 # Graficas individuales
 
@@ -317,8 +324,11 @@ for(i in 1:length(unique(data$V1))){
            geom_line(linewidth = 1.2) + 
            labs (x = paste("Valor del parametro ", para),
                  y = "Valor maximo de poblacion infectada",
-                 title = paste("Parametros vs tiempo de mayor infectados para: ", para),
-                 caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el modelo base para obtener el tiempo en el que se supera la infeccion")
+                 title = paste(
+                   "Parametros vs tiempo de mayor infectados para: ", para),
+                 caption = "
+                 Dentro del intervalo del 0 al 25 por 0.1 se evaluo 
+                 el modelo base para obtener el tiempo en el que se supera la infeccion")
   )
 }
 
