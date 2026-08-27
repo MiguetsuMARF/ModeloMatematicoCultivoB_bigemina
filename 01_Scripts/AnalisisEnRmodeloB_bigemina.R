@@ -416,17 +416,42 @@ data2 <- read.csv("03_Data/datos_maximosrandom.csv")
 
 ### Vamos a realizar el LHS, aqui queremos definir intervalos especificos, muestrear dentro de estos 
 ### intervalos y a partir de ahi 
-inter <- list()
-valores <- list()
-for (i in 1:100) {
-  inter[[i]] <- seq((i-1),i,by = 0.01)
+interv <- list()
+for (i in 1:500){ # Ciclo para generar los intervalos de muestreo
+  interv[[i]] <- seq(((i*2)/10)-0.2, ((i*2)/10), by = 0.005)
 }
-for(i in 1:7){
-  for(j in 1:100){
-    valor <- sample(inter[[j]],1)
-    valores[[i]][j] <- valor
+muestreo <- data.frame()
+for (i in 1:7) { # Lista para realizar el muestreo
+  for (j in 1:500) {
+  muestreo[j,i] <- sample(interv[[j]],1)
   }
 }
+muestreo2 <- muestreo
+valfin <- data.frame()
+for (i in 1:500) { # Combinaciones aleatorias de parametros dentro del muestreo.
+  for (j in 1:7) {
+    if(length(muestreo2[-which(muestreo2[,j] == -1),j]) == 1){
+      sampl <- muestreo2[-which(muestreo2[,j] == -1),j]
+    } else {
+      if(any(muestreo2[,j] == -1)){
+        sampl<- sample(muestreo2[-which(muestreo2[,j] == -1),j],1)
+      } else {
+        sampl<- sample(muestreo2[,j],1)
+      }
+    }
+      valfin[i,j] <- sampl
+      muestreo2[which(muestreo2[,j] == sampl), j] <- -1
+  }
+}
+muestreo2
+valfin
+
+e <- data.frame(
+  a <- c(1,1,1,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
+  d <- c(4,5,6,2,3,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)
+)
+
+e[,1]
 
 a <- list(
   b <- c(1,2,3),
