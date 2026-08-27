@@ -430,11 +430,14 @@ muestreo2 <- muestreo
 valfin <- data.frame()
 for (i in 1:500) { # Combinaciones aleatorias de parametros dentro del muestreo.
   for (j in 1:7) {
-    if(length(muestreo2[-which(muestreo2[,j] == -1),j]) == 1){
-      sampl <- muestreo2[-which(muestreo2[,j] == -1),j]
+    if(length(muestreo2[which(muestreo2[,j] != -1),j]) == 1){
+      sampl <- muestreo2[which(muestreo2[,j] != -1),j]
     } else {
       if(any(muestreo2[,j] == -1)){
-        sampl<- sample(muestreo2[-which(muestreo2[,j] == -1),j],1)
+        if(any(muestreo2[,j] != -1)){
+          sampl<- sample(muestreo2[which(muestreo2[,j] != -1),j],1)
+        } else {
+        }
       } else {
         sampl<- sample(muestreo2[,j],1)
       }
