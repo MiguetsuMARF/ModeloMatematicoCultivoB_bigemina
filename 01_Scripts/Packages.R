@@ -1,0 +1,5 @@
+install.packages("deSolve")
+install.packages("ggplot2")
+install.packages("phaseR")
+install.packages("plotly")
+install.packages("gridExtra")
