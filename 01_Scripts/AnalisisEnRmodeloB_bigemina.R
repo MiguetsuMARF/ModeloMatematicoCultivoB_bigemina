@@ -41,7 +41,7 @@ s <- c(
 )
 
 ## Simulación
-pdf ("02_Images/SimulacionSinAlfaGamma")
+pdf ("02_Images/SimulacionSinAlfaGamma.pdf")
 run(tmax = 100, tstep = 0.001, state = s, parms = p, odes = model)
 dev.off()
 s <- c(x = 1, y = 1, z = 1)
@@ -142,7 +142,7 @@ s <- c(
 )
 
 ## Simulación
-pdf ("02_Images/SimulacionesConAlfaGamma")
+pdf ("02_Images/SimulacionesConAlfaGamma.pdf")
 run(tmax = 75, tstep = 0.01, state = s, parms = p, odes = model)
 run(tmax = 500, tstep = 0.01, state = s, parms = p, odes = model)
 run(tmax = 1000, tstep = 0.01, state = s, parms = p, odes = model)
@@ -213,7 +213,7 @@ str(data)
 library(ggplot2)
 library(gridExtra)
 
-pdf("02_Images/GraficasDatosMax")
+pdf("02_Images/GraficasDatosMax.pdf")
 ggplot(data, aes(x = V2, y = V3, color = V1)) +
   geom_line(linewidth = 1.2) + 
   labs (x = "Valor del parametro",
