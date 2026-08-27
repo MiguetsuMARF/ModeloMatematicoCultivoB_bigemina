@@ -446,20 +446,11 @@ for (i in 1:500) { # Combinaciones aleatorias de parametros dentro del muestreo.
       muestreo2[which(muestreo2[,j] == sampl), j] <- -1
   }
 }
-muestreo2
-valfin
+names(valfin) <- c(
+  "alfa", "beta", "omega", "gamma", "rho", "mu", "psi"
+  )
 
-e <- data.frame(
-  a <- c(1,1,1,7,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1),
-  d <- c(4,5,6,2,3,4,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1)
-)
-
-e[,1]
-
-a <- list(
-  b <- c(1,2,3),
-  d <- c(4,5,6),
-  c <- c(8,9,10)
-)
-
-a[[1]][1]
+write.csv(interv,"03_Data/Intervalos.csv")
+write.csv(muestreo, "03_Data/DatosMuestreoLHS.csv")
+write.csv(muestreo2, "03_Data/ListaRemplazos.csv")
+write.csv(valfin, "LHSParametrosAleatorios.csv")
