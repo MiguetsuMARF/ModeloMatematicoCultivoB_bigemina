@@ -179,6 +179,8 @@ p2 <- c(
   psi   = 2
 )
 para <- c("alfa", "beta", "omega", "gamma", "rho", "mu", "psi")
+times <- seq(0,100,0.01)
+
 for (j in 1:length(p)) {
   count <- count + 1
   pms <- para[j]
@@ -454,3 +456,71 @@ write.csv(interv,"03_Data/Intervalos.csv")
 write.csv(muestreo, "03_Data/DatosMuestreoLHS.csv")
 write.csv(muestreo2, "03_Data/ListaRemplazos.csv")
 write.csv(valfin, "03_Data/LHSParametrosAleatorios.csv")
+
+## Simulaciones con la base de datos aleatorios
+
+library(deSolve)
+model <- function(t,state,parms){
+  
+  with(as.list(c(state,parms)),{
+    dx <- alfa - beta*y*x - omega*x + mu*(rho*(1 + psi)*z)
+    dy <- gamma - beta*y*x - rho*y
+    dz <- beta*y*x - rho*(1 + psi)*z
+    list(c(dx,dy,dz))
+  })
+}
+
+s <- c(
+  x = 0,
+  y = 1000,
+  z = 0
+)
+times <- seq(0,100,0.01)
+data3 <- data.frame()
+for (i in 1:500) {
+  p <- c(
+    alfa  = valfin[i,1],
+    beta  = valfin[i,2],
+    omega = valfin[i,3],
+    gamma = valfin[i,4],
+    rho   = valfin[i,5],
+    mu    = valfin[i,6],
+    psi   = valfin[i,7]
+  )
+  out <- ode(
+    y=s,
+    times=times,
+    func=model,
+    parms=p
+  )
+  maxi <- max(out[,4])
+  tpmax <- out[which(out[,4] == maxi)[1],1]
+  tp <- out[which(out[,4] > out[,3])[1],1]
+  data3[i,1] <- p[1]
+  data3[i,2] <- p[2]
+  data3[i,3] <- p[3]
+  data3[i,4] <- p[4]
+  data3[i,5] <- p[5]
+  data3[i,6] <- p[6]
+  data3[i,7] <- p[7]
+  data3[i,8] <- maxi
+  data3[i,9] <- tpmax
+  data3[i,10] <- tp
+}
+
+names(data3) <- c(
+  "valor_alfa",
+  "valor_beta",
+  "valor_omega",
+  "valor_gamma",
+  "valor_rho",
+  "valor_mu",
+  "valor_psi",
+  "maximo",
+  "tiempo_maximo",
+  "tiempo_mayor_infectados"
+)
+
+write.csv(data3, "03_Data/Datos_SimulacionesLHS.csv")
+data3 <- read.csv("03_Data/Datos_SimulacionesLHS.csv")
+
