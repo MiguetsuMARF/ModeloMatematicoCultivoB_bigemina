@@ -10,7 +10,9 @@
 
 \maketitle
 
-Primer modelo 
+
+\section{Primer modelo}
+
 
 \begin{equation} 
 \left\{\begin{array}{l}
@@ -44,6 +46,99 @@ Las reacciones por tanto se pueden describir como:
 
 \end{itemize}
 
- 
+A partir de este modelo se pueden realizar dos variantes para su respectivo analisis:
+
+\begin{enumerate}
+\item Modelo donde se asume como condicion inicial la llegada de babesias infectivas y eritrocitos sanos (reaccion 1 y 2).
+
+\begin{equation} 
+\left\{\begin{array}{l}
+\dfrac{d\mathscr{B}}{dt}
+=
+- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu [\rho(1+\phi ) \mathscr{I}]
+\\
+\dfrac{d\mathscr{E}}{dt}
+=
+ - \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
+\\
+\dfrac{d\mathscr{I}}{dt}
+=
+\beta \mathscr{B}\mathscr{E} - \rho (1+\phi )\mathscr{I}
+\\
+    \end{array}\right.
+\end{equation}
+
+\item Modelo donde la llegada de babesias infectivas y eritrocitos sanos es constante.
+
+\begin{equation} 
+\left\{\begin{array}{l}
+\dfrac{d\mathscr{B}}{dt}
+=
+\alpha- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu [\rho(1+\phi ) \mathscr{I}]
+\\
+\dfrac{d\mathscr{E}}{dt}
+=
+\gamma- \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
+\\
+\dfrac{d\mathscr{I}}{dt}
+=
+\beta \mathscr{B}\mathscr{E} - \rho (1+\phi )\mathscr{I}
+\\
+    \end{array}\right.
+\end{equation}
+\end{enumerate}
+
+\section{Segundo modelo}
+
+Los cambios que se van a trabajar para este modelo son unicamente con respecto a la tasa de muerte de eritrocitos infectados.
+
+\begin{equation} 
+\left\{\begin{array}{l}
+\dfrac{d\mathscr{B}}{dt}
+=
+\alpha- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu (\phi \mathscr{I})
+\\
+\dfrac{d\mathscr{E}}{dt}
+=
+\gamma- \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
+\\
+\dfrac{d\mathscr{I}}{dt}
+=
+\beta \mathscr{B}\mathscr{E} - \phi \mathscr{I}
+\\
+    \end{array}\right.
+\end{equation}
+
+\section{Tercer modelo}
+
+Reduccion de dimensiones para trabajar unicamente con poblaciones de infectados y eritrocitos sanos.
+
+\begin{equation} 
+\left\{\begin{array}{l}
+\dfrac{d\mathscr{E}}{dt}
+=
+\gamma-\rho \mathscr{E} - [m(t)(\phi \matscr{I}) + \alpha]\mathscr{E}  
+\\
+\dfrac{d\mathscr{I}}{dt}
+=
+[m(t)(\phi \matscr{I}) + \alpha]\mathscr{E} - \phi \mathscr{I}
+\\
+    \end{array}\right.
+\end{equation}
+
+Aqui consideramos que hay una funcion dependiente del tiempo que domina la tasa de infeccion, considerando que las babesias libres son un parametro incluido en esta funcion, por tanto depende de la tasa de muerte de infectados y ademas de la tasa de introduccion de parasitos infecciosos.
+
+\section{Cuarto modelo}
+
+Reduccion de dimensiones para trabajar unicamente con la poblacion infectada.
+
+\begin{equation} 
+\dfrac{d\mathscr{I}}{dt}
+=
+\beta(\frac{E_T - \mathscr{I}}{\phi \mathscr{I}})(\frac{B_T}{p(t)}i\mathscr{I} - \mathscr{I}) - \phi \mathscr{I}
+\\
+
+\end{equation}
+
 \end{document}
 
