@@ -29,10 +29,21 @@ Primer modelo
     \end{array}\right.
 \end{equation}
 
+Donde se describe la dinamica entre las poblaciones de Babesias infecciosas libres ($\mathscr{B}$), eritrocitos sanos en circulacion ($\mathscr{E}$) y eritrocitos infectados ($\mathscr{I}$).
+
+Las reacciones por tanto se pueden describir como:
+
+\begin{itemize}
+\item \textbf{Reaccion 1}: Introduccion de babesias infectivas al sistema. $\alpha(t)$
+\item \textbf{Reaccion 2}: Introduccion de eritrocitos sanos al sistema. $\gamma (t)$
+\item \textbf{Reaccion 3}: Infeccion de eritrocitos sanos, accion de la interaccion con babesias infectivas. $\beta \mathscr{B}\mathscr{E}$
+\item \textbf{Reaccion 4}: Muerte natural de babesias infectivas en circulacion. $\omega \mathscr{B}$
+\item \textbf{Reaccion 5}: Muerte natural de eritrocitos sanos. $\rho \mathscr{E}$
+\item \textbf{Reaccion 6}: Muerte de eritrocitos infectados, dado por la muerte natual de los eritrocitos mas la accion de la infeccion en esta. $\rho (1+\phi )\mathscr{I}$
+\item \textbf{Reaccion 7}: Liberacion de babesias infectivas al ambiente resultado de la muerte de eritrocitos infectados. $\mu [\rho(1+\phi ) \mathscr{I}]$
+
+\end{itemize}
+
  
 \end{document}
 
-
-$$
-- (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)/(3*(mu - 1)) - ((mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^2/(9*(mu - 1)^2) - (omega*rho)/(3*(mu - 1)))/(2*((((omega*rho^2 - mu*omega*rho^2 + omega*psi*rho^2 - mu*omega*psi*rho^2)/(2*mu - 2) + (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^3/(27*(mu - 1)^3) - (omega*rho*(mu*omega - rho + mu*rho - psi*rho + mu*psi*rho))/(6*(mu - 1)^2))^2 - ((mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^2/(9*(mu - 1)^2) - (omega*rho)/(3*mu - 3))^3)^(1/2) - (omega*rho^2 - mu*omega*rho^2 + omega*psi*rho^2 - mu*omega*psi*rho^2)/(2*mu - 2) - (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^3/(27*(mu - 1)^3) + (omega*rho*(mu*omega - rho + mu*rho - psi*rho + mu*psi*rho))/(6*(mu - 1)^2))^(1/3)) - ((((omega*rho^2 - mu*omega*rho^2 + omega*psi*rho^2 - mu*omega*psi*rho^2)/(2*(mu - 1)) + (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^3/(27*(mu - 1)^3) - (omega*rho*(mu*omega - rho + mu*rho - psi*rho + mu*psi*rho))/(6*(mu - 1)^2))^2 - ((mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^2/(9*(mu - 1)^2) - (omega*rho)/(3*(mu - 1)))^3)^(1/2) - (omega*rho^2 - mu*omega*rho^2 + omega*psi*rho^2 - mu*omega*psi*rho^2)/(2*(mu - 1)) - (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^3/(27*(mu - 1)^3) + (omega*rho*(mu*omega - rho + mu*rho - psi*rho + mu*psi*rho))/(6*(mu - 1)^2))^(1/3)/2 + (3^(1/2)*(((mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^2/(9*(mu - 1)^2) - (omega*rho)/(3*(mu - 1)))/((((omega*rho^2 - mu*omega*rho^2 + omega*psi*rho^2 - mu*omega*psi*rho^2)/(2*mu - 2) + (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^3/(27*(mu - 1)^3) - (omega*rho*(mu*omega - rho + mu*rho - psi*rho + mu*psi*rho))/(6*(mu - 1)^2))^2 - ((mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^2/(9*(mu - 1)^2) - (omega*rho)/(3*mu - 3))^3)^(1/2) - (omega*rho^2 - mu*omega*rho^2 + omega*psi*rho^2 - mu*omega*psi*rho^2)/(2*mu - 2) - (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^3/(27*(mu - 1)^3) + (omega*rho*(mu*omega - rho + mu*rho - psi*rho + mu*psi*rho))/(6*(mu - 1)^2))^(1/3) - ((((omega*rho^2 - mu*omega*rho^2 + omega*psi*rho^2 - mu*omega*psi*rho^2)/(2*(mu - 1)) + (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^3/(27*(mu - 1)^3) - (omega*rho*(mu*omega - rho + mu*rho - psi*rho + mu*psi*rho))/(6*(mu - 1)^2))^2 - ((mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^2/(9*(mu - 1)^2) - (omega*rho)/(3*(mu - 1)))^3)^(1/2) - (omega*rho^2 - mu*omega*rho^2 + omega*psi*rho^2 - mu*omega*psi*rho^2)/(2*(mu - 1)) - (mu*omega - rho + mu*rho - psi*rho + mu*psi*rho)^3/(27*(mu - 1)^3) + (omega*rho*(mu*omega - rho + mu*rho - psi*rho + mu*psi*rho))/(6*(mu - 1)^2))^(1/3))*1i)/2
-$$
