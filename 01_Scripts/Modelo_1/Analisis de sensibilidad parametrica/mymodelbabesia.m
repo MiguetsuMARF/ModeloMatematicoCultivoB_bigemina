@@ -1,4 +1,4 @@
-function Imax = mymodelbabesia*(x)
+function Imax = mymodelbabesia(x)
 
 nominal_parameters = [0.25, 0.005, 1/3, 0.15, 1/25, 5, 2];
 nominal_parameters(1:7)=x(1:7);
@@ -23,9 +23,9 @@ I0 =x(10);
 
 BEI0 = [B0 E0 I0];
 
-[t,y] = ode45(@(t,y) [dBdt(t,y(1),y(2),y(3),alfa,beta,omega,gamma,rho,mu,psi);
-    dEdt(t,y(1),y(2),y(3),alfa,beta,omega,gamma,rho,mu,psi);
-    dIdt(t,y(1),y(2),y(3),alfa,beta,omega,gamma,rho,mu,psi)
+[t,y] = ode45(@(t,y) [dBdt(t,y(1),y(2),y(3),alfa,beta,omega,rho,mu,psi);
+    dEdt(t,y(1),y(2),y(3),beta, gamma, rho);
+    dIdt(t,y(1),y(2),y(3),beta, rho, psi)
     ], tspan,BEI0);
 
 Imax = max(y(:,3));
