@@ -18,6 +18,7 @@ pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'B0');
 pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'E0');
 pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'I0');
 
+%% Liena 
 pro = pro_SetModel(pro, @(x)mymodelbabesia(x), 'model');
 
 pro.N = 10000;
@@ -40,7 +41,7 @@ parameter_names = {'alfa','beta','omega','gamma','rho','mu','psi','B0','E0','I0'
 
 [sorted_sotols, index_sorted_sotols]=sort(abs(sensitivity_indexes_vector),'descend');
 
-
+%%
 figure;
 bar(abs(sensitivity_indexes_vector(index_sorted_sotols)));
 ylabel('Sobol sensitivity indices');
@@ -51,7 +52,7 @@ xlim([0,10]);
 Sfast = GSA_FAST_GetSi(pro);
 
 [sorted_eFAST, index_sorted_eFAST]=sort(abs(Sfast),'descend');
-
+%%
 figure;
 bar((Sfast(index_sorted_eFAST)));
 ylabel('eFAST sensitivity indices');

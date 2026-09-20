@@ -1,5 +1,5 @@
 ########################################################################################
-######################### MODELO INICIAL BABESIA BIGEMINA ##############################
+######################### MODELO 2 BABESIA BIGEMINA ##############################
 ########################################################################################
 
 #### Definiendo el sistema
@@ -16,149 +16,124 @@ library(plotly)
 model <- function(t,state,parms){
   
   with(as.list(c(state,parms)),{
+    
     # Ecuacion para poblacion de parasitos infectivos
-    dx <- alfa - beta*y*x - omega*x + mu*(rho*(1 + psi)*z)
+    dx <- - beta*y*x - muB*x + rho*muI*z
+    
     # Ecuacion para poblacion de eritrocitos sanos
-    dy <- gamma - beta*y*x - rho*y
+    dy <- - beta*y*x - muE*y
+    
     # Ecuacion para poblacion de eritrocitos infectados
-    dz <- beta*y*x - rho*(1 + psi)*z
+    dz <- beta*y*x - muI*z
+    
     list(c(dx,dy,dz))
   })
 }
 
-## Parametros, las primeras simulaciones seran sin tasas de introduccion.
+## Parametros. Todos son dias-1
 p <- c(
-  alfa  = 0,
-  beta  = 0.005,
-  omega = 1/3,
-  gamma = 0,
-  rho   = 1/25,
-  mu    = 5,
-  psi   = 2
+  beta = 3.3*(10^-8),
+  muB = 20,
+  muE = 0.01,
+  muI = 4,
+  rho = 2 # proporcion
 )
 
 ## Condiciones iniciales
 s <- c(
-  x = 10,
-  y = 1000,
-  z = 0
+  x = 2*(10^2),
+  y = 9*(10^8),
+  z = 1*(10^7)
 )
 
 ## Simulación
-pdf ("02_Images/SimulacionSinAlfaGamma.pdf")
-run(tmax = 100, tstep = 0.001, state = s, parms = p, odes = model)
+pdf ("02_Images/Simulacionmodelo2.pdf")
+run(tmax = 10, tstep = 0.0001, state = s, parms = p, odes = model)
 dev.off()
 s <- c(x = 1, y = 1, z = 1)
 
 ## Busqueda numerica de puntos de equilibrio.
 plane(xmin=-5,xmax=5, ymin = -20,ymax = 5)
 first <- newton(s,plot=T)
-second <- newton(c(x = 100, y = 100, z = 100),plot=T)
-third <- newton(c(x = 0, y = -20, z = 0),plot=T)
+second <- newton(c(x = 0, y = -20, z = 0),plot=T)
 
 ## Analisis de bifurcaciones de los primeros puntos de equilibrio.
-continue(state=first, parms = p, odes=model, x="beta", step=0.001, 
-         xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
-continue(state=first, parms = p, odes=model, x="beta", step=0.001, 
-         xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
-continue(state=first, parms = p, odes=model, x="beta", step=0.001, 
-         xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="beta", step=0.0001, 
+         xmin=0,xmax=2,y="x", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="beta", step=0.0001, 
+         xmin=0,xmax=2,y="y", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="beta", step=0.0001, 
+         xmin=0,xmax=2,y="z", ymin=-1, ymax=100)
 
-continue(state=third, parms = p, odes=model, x="beta", step=0.001, 
-         xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
-continue(state=third, parms = p, odes=model, x="beta", step=0.001, 
-         xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
-continue(state=third, parms = p, odes=model, x="beta", step=0.001, 
-         xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="beta", step=0.0001, 
+         xmin=0,xmax=2,y="x", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="beta", step=0.0001, 
+         xmin=0,xmax=2,y="y", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="beta", step=0.0001, 
+         xmin=0,xmax=2,y="z", ymin=-1, ymax=100)
+## Sin bifurcaciones.
 
+continue(state=first, parms = p, odes=model, x="muB", step=0.01, 
+         xmin=0,xmax=100,y="x", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="muB", step=0.01, 
+         xmin=0,xmax=100,y="y", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="muB", step=0.01, 
+         xmin=0,xmax=100,y="z", ymin=-1, ymax=100)
+
+continue(state=second, parms = p, odes=model, x="muB", step=0.01, 
+         xmin=0,xmax=100,y="x", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="muB", step=0.01, 
+         xmin=0,xmax=100,y="y", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="muB", step=0.01, 
+         xmin=0,xmax=100,y="z", ymin=-1, ymax=100)
+## Bifurcacion en muB = 0.
+
+continue(state=first, parms = p, odes=model, x="muE", step=0.0001, 
+         xmin=0,xmax=1,y="x", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="muE", step=0.0001, 
+         xmin=0,xmax=1,y="y", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="muE", step=0.0001, 
+         xmin=0,xmax=1,y="z", ymin=-1, ymax=100)
+
+continue(state=second, parms = p, odes=model, x="muE", step=0.0001, 
+         xmin=0,xmax=1,y="x", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="muE", step=0.0001, 
+         xmin=0,xmax=1,y="y", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="muE", step=0.0001, 
+         xmin=0,xmax=1,y="z", ymin=-1, ymax=100)
+
+# Bifurcation at muE = -1e-04 
+
+continue(state=first, parms = p, odes=model, x="muI", step=0.001, 
+         xmin=0,xmax=25,y="x", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="muI", step=0.001, 
+         xmin=0,xmax=25,y="y", ymin=-1, ymax=100)
+continue(state=first, parms = p, odes=model, x="muI", step=0.001, 
+         xmin=0,xmax=25,y="z", ymin=-1, ymax=100)
+
+continue(state=second, parms = p, odes=model, x="muI", step=0.001, 
+         xmin=0,xmax=25,y="x", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="muI", step=0.001, 
+         xmin=0,xmax=25,y="y", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="muI", step=0.001, 
+         xmin=0,xmax=25,y="z", ymin=-1, ymax=100)
+
+# Bifurcation at muI = -0.025 
 
 continue(state=first, parms = p, odes=model, x="rho", step=0.001, 
-         xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
+         xmin=0,xmax=25,y="x", ymin=-1, ymax=100)
 continue(state=first, parms = p, odes=model, x="rho", step=0.001, 
-         xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
+         xmin=0,xmax=25,y="y", ymin=-1, ymax=100)
 continue(state=first, parms = p, odes=model, x="rho", step=0.001, 
-         xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
+         xmin=0,xmax=25,y="z", ymin=-1, ymax=100)
 
-continue(state=third, parms = p, odes=model, x="rho", step=0.001, 
-         xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
-continue(state=third, parms = p, odes=model, x="rho", step=0.001, 
-         xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
-continue(state=third, parms = p, odes=model, x="rho", step=0.001, 
-         xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="rho", step=0.001, 
+         xmin=0,xmax=25,y="x", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="rho", step=0.001, 
+         xmin=0,xmax=25,y="y", ymin=-1, ymax=100)
+continue(state=second, parms = p, odes=model, x="rho", step=0.001, 
+         xmin=0,xmax=25,y="z", ymin=-1, ymax=100)
 
-
-continue(state=first, parms = p, odes=model, x="psi", step=0.001, 
-         xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
-continue(state=first, parms = p, odes=model, x="psi", step=0.001, 
-         xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
-continue(state=first, parms = p, odes=model, x="psi", step=0.001, 
-         xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
-
-continue(state=third, parms = p, odes=model, x="psi", step=0.001, 
-         xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
-continue(state=third, parms = p, odes=model, x="psi", step=0.001, 
-         xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
-continue(state=third, parms = p, odes=model, x="psi", step=0.001, 
-         xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
-
-
-continue(state=first, parms = p, odes=model, x="omega", step=0.001, 
-         xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
-continue(state=first, parms = p, odes=model, x="omega", step=0.001, 
-         xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
-continue(state=first, parms = p, odes=model, x="omega", step=0.001, 
-         xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
-
-continue(state=third, parms = p, odes=model, x="omega", step=0.001, 
-         xmin=0,xmax=10,y="x", ymin=-1, ymax=100)
-continue(state=third, parms = p, odes=model, x="omega", step=0.001, 
-         xmin=0,xmax=10,y="y", ymin=-1, ymax=100)
-continue(state=third, parms = p, odes=model, x="omega", step=0.001, 
-         xmin=0,xmax=10,y="z", ymin=-1, ymax=100)
-
-########################################################################################
-##################### MODELO con constantes BABESIA BIGEMINA ###########################
-########################################################################################
-
-## Definimos simbolicamente
-
-model <- function(t,state,parms){
-  
-  with(as.list(c(state,parms)),{
-    # Ecuacion para poblacion de parasitos infectivos
-    dx <- alfa - beta*y*x - omega*x + mu*(rho*(1 + psi)*z)
-    # Ecuacion para poblacion de eritrocitos sanos
-    dy <- gamma - beta*y*x - rho*y
-    # Ecuacion para poblacion de eritrocitos infectados
-    dz <- beta*y*x - rho*(1 + psi)*z
-    list(c(dx,dy,dz))
-  })
-}
-
-## Parametros, ahora con las tasas de introduccion como constantes
-p <- c(
-  alfa  = 0.25,
-  beta  = 0.005,
-  omega = 1/3,
-  gamma = 0.15,
-  rho   = 1/25,
-  mu    = 5,
-  psi   = 2
-)
-
-## Condiciones iniciales
-s <- c(
-  x = 0,
-  y = 1000,
-  z = 0
-)
-
-## Simulación
-pdf ("02_Images/SimulacionesConAlfaGamma.pdf")
-run(tmax = 75, tstep = 0.01, state = s, parms = p, odes = model)
-run(tmax = 500, tstep = 0.01, state = s, parms = p, odes = model)
-run(tmax = 1000, tstep = 0.01, state = s, parms = p, odes = model)
-dev.off()
 
 ###### Ciclo para obtener valores maximos y analisis de picos #############
 data <- data.frame(
@@ -166,20 +141,21 @@ data <- data.frame(
   valor_parametro = c(),
   maximo = c(),
   tiempo_maximo = c(),
-  tiempo_mayor_infectados = c()
+  tiempo_mayor_infectados = c(),
+  parasitemiamax = c()
 )
 count <- 0
+
 p2 <- c(
-  alfa  = 0.25,
-  beta  = 0.005,
-  omega = 1/3,
-  gamma = 0.15,
-  rho   = 1/25,
-  mu    = 5,
-  psi   = 2
+  beta = 3.3*(10^-8),
+  muB = 20,
+  muE = 0.01,
+  muI = 4,
+  rho = 2 
 )
-para <- c("alfa", "beta", "omega", "gamma", "rho", "mu", "psi")
-times <- seq(0,100,0.01)
+
+para <- c("beta", "muB", "muE", "muI", "rho")
+times <- seq(0,10,0.001)
 
 for (j in 1:length(p)) {
   count <- count + 1
@@ -198,19 +174,21 @@ for (j in 1:length(p)) {
     maxi <- max(out[,4])
     tpmax <- out[which(out[,4] == maxi)[1],1]
     tp <- out[which(out[,4] > out[,3])[1],1]
+    parasitemiamax <- (maxi/out[which(out[,4] == maxi)[1],3])*100
     data[count,1] <- pms
     data[count,2] <- p[j]
     data[count,3] <- maxi
     data[count,4] <- tpmax
     data[count,5] <- tp
+    data[count,6] <- parasitemiamax
     count <- count + 1
   }
 }
 
-write.csv(data, "03_Data/datos_maximos.csv")
+write.csv(data, "03_Data/datos_maximos(modelo2).csv")
 
 ## Datos de maximos al variar los parametros
-data <- read.csv("03_Data/datos_maximos.csv")
+data <- read.csv("03_Data/datos_maximos(modelo2).csv")
 
 str(data)
 
@@ -219,7 +197,7 @@ str(data)
 library(ggplot2)
 library(gridExtra)
 
-pdf("02_Images/GraficasDatosMax.pdf")
+pdf("02_Images/GraficasDatosMax(modelo2).pdf")
 ggplot(data, aes(x = V2, y = V3, color = V1)) +
   geom_line(linewidth = 1.2) + 
   labs (x = "Valor del parametro",
@@ -333,20 +311,38 @@ for(i in 1:length(unique(data$V1))){
                  el modelo base para obtener el tiempo en el que se supera la infeccion")
   )
 }
-
+ggplot(data, aes(x = V2, y = V6, color = V1)) +
+  geom_line(linewidth = 1.2) + 
+  labs (x = "Valor del parametro",
+        y = "Valor de parasitemia",
+        color = "Parametro",
+        title = "Parametros vs Parasitemia en valor maximo",
+        caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo el 
+        modelo base para obtener los valores de parasitemia.")
+for(i in 1:length(unique(data$V1))){
+  datafor <- data[which(data$V1 == unique(data$V1)[i]),]
+  para <- unique(data$V1)[i]
+  print( ggplot(datafor, aes(x = V2, y = V3)) +
+           geom_line(linewidth = 1.2) + 
+           labs (x = paste("Valor del parametro ", para),
+                 y = "Valor de parasitemia",
+                 title = paste(
+                   "Parametros vs Valor de parasitemia para: ", para),
+                 caption = "Dentro del intervalo del 0 al 25 por 0.1 se evaluo 
+                 el modelo base para obtener los valores de parasitemia.")
+  )
+}
 dev.off()
 
 ### Muestreo aleatorio con reemplazo.
 library(deSolve)
 
 data2 <- data.frame(
-  valor_alfa = c(),
   valor_beta = c(),
-  valor_omega = c(),
-  valor_gamma = c(),
+  valor_muB = c(),
+  valor_muE = c(),
+  valor_muI = c(),
   valor_rho = c(),
-  valor_mu = c(),
-  valor_psi = c(),
   maximo = c(),
   tiempo_maximo = c(),
   tiempo_mayor_infectados = c()
@@ -366,13 +362,11 @@ for (i in 1:5000) {
   if (co == 0){
     combinaciones[[i]] <- pa
     p <- c(
-      alfa  = pa[1],
-      beta  = pa[2],
-      omega = pa[3],
-      gamma = pa[4],
-      rho   = pa[5],
-      mu    = pa[6],
-      psi   = pa[7]
+      beta = pa[1],
+      muB  = pa[2],
+      muE = pa[3],
+      muI = pa[4],
+      rho   = pa[5]
     )
     out <- ode(
       y=s,
@@ -388,32 +382,28 @@ for (i in 1:5000) {
     data2[i,3] <- p[3]
     data2[i,4] <- p[4]
     data2[i,5] <- p[5]
-    data2[i,6] <- p[6]
-    data2[i,7] <- p[7]
-    data2[i,8] <- maxi
-    data2[i,9] <- tpmax
-    data2[i,10] <- tp
+    data2[i,6] <- maxi
+    data2[i,7] <- tpmax
+    data2[i,8] <- tp
   }
 }
 
 names(data2) <- c(
-  "valor_alfa",
   "valor_beta",
-  "valor_omega",
-  "valor_gamma",
+  "valor_muB",
+  "valor_muE",
+  "valor_muI",
   "valor_rho",
-  "valor_mu",
-  "valor_psi",
   "maximo",
   "tiempo_maximo",
   "tiempo_mayor_infectados"
 )
 View(data2)
 
-write.csv(data2, "./datos_maximosrandom.csv")
+write.csv(data2, "./datos_maximosrandom(modelo2).csv")
 
 ## Datos de maximos al variar los parametros
-data2 <- read.csv("03_Data/datos_maximosrandom.csv")
+data2 <- read.csv("03_Data/datos_maximosrandom(modelo2).csv")
 
 
 ### Vamos a realizar el LHS, aqui queremos definir intervalos especificos, muestrear dentro de estos 

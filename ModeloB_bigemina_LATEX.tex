@@ -4,6 +4,8 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{mathrsfs}
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
 \author{Miguel Angel Rodriguez Feregrino}
 \title{Modelo Babesia bigemina}
 \begin{document}
@@ -13,132 +15,51 @@
 
 \section{Primer modelo}
 
+Este modelo se planteo unicamente con datos bibliograficos. El objetivo de este primer modelo es representar la dinamica celular existente en \textbf{una infeccion experimental \textit{in vitro} de \textit{Babesia bigemina}.} La primer aproximacion por tanto es:
 
 \begin{equation} 
 \left\{\begin{array}{l}
-\dfrac{d\mathscr{B}}{dt}
+\dfrac{dB}{dt}
 =
-\alpha(t)- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu [\rho(1+\phi ) \mathscr{I}]
+- \beta BE - \mu_B B + \rho (\mu_I I)
 \\
-\dfrac{d\mathscr{E}}{dt}
+\dfrac{dE}{dt}
 =
-\gamma (t) - \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
+- \beta BE -\mu_E E 
 \\
-\dfrac{d\mathscr{I}}{dt}
+\dfrac{dI}{dt}
 =
-\beta \mathscr{B}\mathscr{E} - \rho (1+\phi )\mathscr{I}
+\beta BE - \mu_I I
 \\
     \end{array}\right.
 \end{equation}
 
-Donde se describe la dinamica entre las poblaciones de Babesias infecciosas libres ($\mathscr{B}$), eritrocitos sanos en circulacion ($\mathscr{E}$) y eritrocitos infectados ($\mathscr{I}$).
+Donde se describe la dinamica entre las poblaciones de Babesias infecciosas libres ($B$), eritrocitos sanos en circulacion ($E$) y eritrocitos infectados ($I$).
 
 Las reacciones por tanto se pueden describir como:
 
 \begin{itemize}
-\item \textbf{Reaccion 1}: Introduccion de babesias infectivas al sistema. $\alpha(t)$
-\item \textbf{Reaccion 2}: Introduccion de eritrocitos sanos al sistema. $\gamma (t)$
-\item \textbf{Reaccion 3}: Infeccion de eritrocitos sanos, accion de la interaccion con babesias infectivas. $\beta \mathscr{B}\mathscr{E}$
-\item \textbf{Reaccion 4}: Muerte natural de babesias infectivas en circulacion. $\omega \mathscr{B}$
-\item \textbf{Reaccion 5}: Muerte natural de eritrocitos sanos. $\rho \mathscr{E}$
-\item \textbf{Reaccion 6}: Muerte de eritrocitos infectados, dado por la muerte natual de los eritrocitos mas la accion de la infeccion en esta. $\rho (1+\phi )\mathscr{I}$
-\item \textbf{Reaccion 7}: Liberacion de babesias infectivas al ambiente resultado de la muerte de eritrocitos infectados. $\mu [\rho(1+\phi ) \mathscr{I}]$
+\item \textbf{Reaccion 1}: Infeccion de eritrocitos sanos, accion de la interaccion con babesias infectivas. $\beta BE$.
+\item \textbf{Reaccion 2}: Muerte natural de babesias infectivas en circulacion. $\mu_B B$.
+\item \textbf{Reaccion 3}: Muerte natural de eritrocitos sanos. $\mu_E E$.
+\item \textbf{Reaccion 4}: Muerte de eritrocitos infectados.. $\mu_I I$.
+\item \textbf{Reaccion 5}: Liberacion de babesias infectivas al ambiente resultado de la muerte de eritrocitos infectados. $\rho (\mu_I I)$.
 
 \end{itemize}
 
-A partir de este modelo se pueden realizar dos variantes para su respectivo analisis:
+Se trabaja bajo varios supuestos.
 
-\begin{enumerate}
-\item Modelo donde se asume como condicion inicial la llegada de babesias infectivas y eritrocitos sanos (reaccion 1 y 2).
+Para empezar consideramos que no hay tasas de introduccion al sistema de eritrocitos sanos, eritrocitos infectados o de babesias infectivas libres como terminos que afectan la interaccion. En un cultivo celular estos elementos son introducidos a lo largo de intervalos de tiempos definidos, por lo que se considera que esta perturbacion en las poblaciones del sistema esta dada por cambios en condiciones iniciales.
 
-\begin{equation} 
-\left\{\begin{array}{l}
-\dfrac{d\mathscr{B}}{dt}
-=
-- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu [\rho(1+\phi ) \mathscr{I}]
-\\
-\dfrac{d\mathscr{E}}{dt}
-=
- - \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
-\\
-\dfrac{d\mathscr{I}}{dt}
-=
-\beta \mathscr{B}\mathscr{E} - \rho (1+\phi )\mathscr{I}
-\\
-    \end{array}\right.
-\end{equation}
+La tasa de infeccion es constante a lo largo de la infeccion.
 
-\item Modelo donde la llegada de babesias infectivas y eritrocitos sanos es constante.
+La tasa de muerte de los eritrocitos infectados es constante y lleva a la liberacion de la misma cantidad de babesias infectivas.
 
-\begin{equation} 
-\left\{\begin{array}{l}
-\dfrac{d\mathscr{B}}{dt}
-=
-\alpha- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu [\rho(1+\phi ) \mathscr{I}]
-\\
-\dfrac{d\mathscr{E}}{dt}
-=
-\gamma- \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
-\\
-\dfrac{d\mathscr{I}}{dt}
-=
-\beta \mathscr{B}\mathscr{E} - \rho (1+\phi )\mathscr{I}
-\\
-    \end{array}\right.
-\end{equation}
-\end{enumerate}
+No hay factores externos que alteran la dinamica infectiva.
 
-\section{Segundo modelo}
+Las fases asexuales que estan involucradas en el cultivo celular (merozoitos, trofozoitos y en pequenas proporciones gametocitos y esporozoitos) son consideradas como "babesias infectivas", por lo que la tasa de infeccion, muerte y proporcion liberada es un promedio de estas poblaciones.
 
-Los cambios que se van a trabajar para este modelo son unicamente con respecto a la tasa de muerte de eritrocitos infectados.
 
-\begin{equation} 
-\left\{\begin{array}{l}
-\dfrac{d\mathscr{B}}{dt}
-=
-\alpha- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu (\phi \mathscr{I})
-\\
-\dfrac{d\mathscr{E}}{dt}
-=
-\gamma- \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
-\\
-\dfrac{d\mathscr{I}}{dt}
-=
-\beta \mathscr{B}\mathscr{E} - \phi \mathscr{I}
-\\
-    \end{array}\right.
-\end{equation}
-
-\section{Tercer modelo}
-
-Reduccion de dimensiones para trabajar unicamente con poblaciones de infectados y eritrocitos sanos.
-
-\begin{equation} 
-\left\{\begin{array}{l}
-\dfrac{d\mathscr{E}}{dt}
-=
-\gamma-\rho \mathscr{E} - [m(t)(\phi \matscr{I}) + \alpha]\mathscr{E}  
-\\
-\dfrac{d\mathscr{I}}{dt}
-=
-[m(t)(\phi \matscr{I}) + \alpha]\mathscr{E} - \phi \mathscr{I}
-\\
-    \end{array}\right.
-\end{equation}
-
-Aqui consideramos que hay una funcion dependiente del tiempo que domina la tasa de infeccion, considerando que las babesias libres son un parametro incluido en esta funcion, por tanto depende de la tasa de muerte de infectados y ademas de la tasa de introduccion de parasitos infecciosos.
-
-\section{Cuarto modelo}
-
-Reduccion de dimensiones para trabajar unicamente con la poblacion infectada.
-
-\begin{equation} 
-\dfrac{d\mathscr{I}}{dt}
-=
-\beta(\frac{E_T - \mathscr{I}}{\phi \mathscr{I}})(\frac{B_T}{p(t)}i\mathscr{I} - \mathscr{I}) - \phi \mathscr{I}
-\\
-
-\end{equation}
 
 \end{document}
 

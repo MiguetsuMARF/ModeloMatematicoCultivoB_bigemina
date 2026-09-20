@@ -34,6 +34,7 @@ BEI0 = [B0 E0 I0];
 
 %% Variable de respuesta del analisis (variable dependiendo del analisis)
 Imax = max(y(:,3));
+Bmax = max(y(:,1));
 end
 
 %% Definir modelo como funcion completa
