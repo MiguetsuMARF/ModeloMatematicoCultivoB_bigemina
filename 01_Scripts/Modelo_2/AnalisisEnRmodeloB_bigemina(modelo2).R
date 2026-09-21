@@ -47,8 +47,38 @@ s <- c(
 )
 
 ## Simulación
+library(deSolve)
+library(ggplot2)
+times <- seq(0,10,0.0001)
+out <- ode(
+  y=s,
+  times=times,
+  func=model,
+  parms=p
+)
+data <- data.frame()
+for (i in 1:length(out[,1])) {
+  pp <- (out[i,4]/(out[i,3]+out[i,4]))*100
+  data[i,1] <- i
+  data[i,2] <- out[i,3]
+  data[i,3] <- out[i,4]
+  data[i,4] <- pp
+}
+names(data) <- c(
+  "tiempo",
+  "eritrocitos_sanos",
+  "eritrocitos_infectados",
+  "estimado_parasitemia"
+)
 pdf ("02_Images/Simulacionmodelo2.pdf")
 run(tmax = 10, tstep = 0.0001, state = s, parms = p, odes = model)
+
+ggplot(data, aes(x = tiempo, y = estimado_parasitemia))+
+  geom_line()+ 
+  labs (x = "Tiempo (10 dias en 0.0001)",
+        y = "Valor de parasitemia",
+        title = "Parasitemia en simulacion")
+
 dev.off()
 s <- c(x = 1, y = 1, z = 1)
 
@@ -174,7 +204,7 @@ for (j in 1:length(p)) {
     maxi <- max(out[,4])
     tpmax <- out[which(out[,4] == maxi)[1],1]
     tp <- out[which(out[,4] > out[,3])[1],1]
-    parasitemiamax <- (maxi/out[which(out[,4] == maxi)[1],3])*100
+    parasitemiamax <- (maxi/(out[which(out[,4] == maxi)[1],3]+maxi))*100
     data[count,1] <- pms
     data[count,2] <- p[j]
     data[count,3] <- maxi
@@ -345,7 +375,8 @@ data2 <- data.frame(
   valor_rho = c(),
   maximo = c(),
   tiempo_maximo = c(),
-  tiempo_mayor_infectados = c()
+  tiempo_mayor_infectados = c(),
+  parasitemiamaxima = c()
 )
 combinaciones <- list()
 
@@ -377,6 +408,7 @@ for (i in 1:5000) {
     maxi <- max(out[,4])
     tpmax <- out[which(out[,4] == maxi)[1],1]
     tp <- out[which(out[,4] > out[,3])[1],1]
+    parasitemiamax <- (maxi/(out[which(out[,4] == maxi)[1],3]+maxi))*100
     data2[i,1] <- p[1]
     data2[i,2] <- p[2]
     data2[i,3] <- p[3]
@@ -385,6 +417,7 @@ for (i in 1:5000) {
     data2[i,6] <- maxi
     data2[i,7] <- tpmax
     data2[i,8] <- tp
+    data2[i,9] <- parasitemiamax
   }
 }
 
@@ -396,7 +429,8 @@ names(data2) <- c(
   "valor_rho",
   "maximo",
   "tiempo_maximo",
-  "tiempo_mayor_infectados"
+  "tiempo_mayor_infectados",
+  "parasitemia_en_valor_maximo"
 )
 View(data2)
 
@@ -413,7 +447,7 @@ for (i in 1:500){ # Ciclo para generar los intervalos de muestreo
   interv[[i]] <- seq(((i*2)/10)-0.2, ((i*2)/10), by = 0.005)
 }
 muestreo <- data.frame()
-for (i in 1:7) { # Lista para realizar el muestreo
+for (i in 1:5) { # Lista para realizar el muestreo
   for (j in 1:500) {
   muestreo[j,i] <- sample(interv[[j]],1)
   }
@@ -421,7 +455,7 @@ for (i in 1:7) { # Lista para realizar el muestreo
 muestreo2 <- muestreo
 valfin <- data.frame()
 for (i in 1:500) { # Combinaciones aleatorias de parametros dentro del muestreo.
-  for (j in 1:7) {
+  for (j in 1:5) {
     if(length(muestreo2[which(muestreo2[,j] != -1),j]) == 1){
       sampl <- muestreo2[which(muestreo2[,j] != -1),j]
     } else {
@@ -439,7 +473,7 @@ for (i in 1:500) { # Combinaciones aleatorias de parametros dentro del muestreo.
   }
 }
 names(valfin) <- c(
-  "alfa", "beta", "omega", "gamma", "rho", "mu", "psi"
+  "gamma","muB","muE","muI","rho"
   )
 
 write.csv(interv,"03_Data/Intervalos.csv")
@@ -453,9 +487,11 @@ library(deSolve)
 model <- function(t,state,parms){
   
   with(as.list(c(state,parms)),{
-    dx <- alfa - beta*y*x - omega*x + mu*(rho*(1 + psi)*z)
-    dy <- gamma - beta*y*x - rho*y
-    dz <- beta*y*x - rho*(1 + psi)*z
+    
+    dx <- - beta*y*x - muB*x + rho*muI*z
+    dy <- - beta*y*x - muE*y
+    dz <- beta*y*x - muI*z
+    
     list(c(dx,dy,dz))
   })
 }
