@@ -12,8 +12,83 @@
 
 \maketitle
 
+\section{Primer modelo: Aproximacion inicial}
 
-\section{Primer modelo}
+\begin{equation} 
+\left\{\begin{array}{l}
+\dfrac{d\mathscr{B}}{dt}
+=
+\alpha(t)- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu [\rho(1+\phi ) \mathscr{I}]
+\\
+\dfrac{d\mathscr{E}}{dt}
+=
+\gamma (t) - \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
+- \beta BE -\mu_E E 
+\\
+\dfrac{d\mathscr{I}}{dt}
+=
+\beta \mathscr{B}\mathscr{E} - \rho (1+\phi )\mathscr{I}
+\\
+    \end{array}\right.
+\end{equation}
+
+Donde se describe la dinamica entre las poblaciones de Babesias infecciosas libres ($\mathscr{B}$), eritrocitos sanos en circulacion ($\mathscr{E}$) y eritrocitos infectados ($\mathscr{I}$).
+
+Las reacciones por tanto se pueden describir como:
+
+\begin{itemize}
+\item \textbf{Reaccion 1}: Introduccion de babesias infectivas al sistema. $\alpha(t)$
+\item \textbf{Reaccion 2}: Introduccion de eritrocitos sanos al sistema. $\gamma (t)$
+\item \textbf{Reaccion 3}: Infeccion de eritrocitos sanos, accion de la interaccion con babesias infectivas. $\beta \mathscr{B}\mathscr{E}$
+\item \textbf{Reaccion 4}: Muerte natural de babesias infectivas en circulacion. $\omega \mathscr{B}$
+\item \textbf{Reaccion 5}: Muerte natural de eritrocitos sanos. $\rho \mathscr{E}$
+\item \textbf{Reaccion 6}: Muerte de eritrocitos infectados, dado por la muerte natual de los eritrocitos mas la accion de la infeccion en esta. $\rho (1+\phi )\mathscr{I}$
+\item \textbf{Reaccion 7}: Liberacion de babesias infectivas al ambiente resultado de la muerte de eritrocitos infectados. $\mu [\rho(1+\phi ) \mathscr{I}]$
+
+\end{itemize}
+
+A partir de este modelo se pueden realizar dos variantes para su respectivo analisis:
+
+\begin{enumerate}
+\item Modelo donde se asume como condicion inicial la llegada de babesias infectivas y eritrocitos sanos (reaccion 1 y 2).
+
+\begin{equation} 
+\left\{\begin{array}{l}
+\dfrac{d\mathscr{B}}{dt}
+=
+\mu [\rho(1+\phi ) \mathscr{I}] - \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} 
+\\
+\dfrac{d\mathscr{E}}{dt}
+=
+ - \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
+\\
+\dfrac{d\mathscr{I}}{dt}
+=
+\beta \mathscr{B}\mathscr{E} - \rho (1+\phi )\mathscr{I}
+\\
+    \end{array}\right.
+\end{equation}
+
+\item Modelo donde la llegada de babesias infectivas y eritrocitos sanos es constante.
+
+\begin{equation} 
+\left\{\begin{array}{l}
+\dfrac{d\mathscr{B}}{dt}
+=
+\alpha- \beta \mathscr{B}\mathscr{E} - \omega \mathscr{B} + \mu [\rho(1+\phi ) \mathscr{I}]
+\\
+\dfrac{d\mathscr{E}}{dt}
+=
+\gamma- \beta \mathscr{B}\mathscr{E} -\rho \mathscr{E} 
+\\
+\dfrac{d\mathscr{I}}{dt}
+=
+\beta \mathscr{B}\mathscr{E} - \rho (1+\phi )\mathscr{I}
+\\
+    \end{array}\right.
+\end{equation}
+\end{enumerate}
+\section{Segundo modelo: Aproximacion con tasas de muerte.}
 
 Este modelo se planteo unicamente con datos bibliograficos. El objetivo de este primer modelo es representar la dinamica celular existente en \textbf{una infeccion experimental \textit{in vitro} de \textit{Babesia bigemina}.} La primer aproximacion por tanto es:
 
@@ -21,7 +96,7 @@ Este modelo se planteo unicamente con datos bibliograficos. El objetivo de este 
 \left\{\begin{array}{l}
 \dfrac{dB}{dt}
 =
-- \beta BE - \mu_B B + \rho (\mu_I I)
+\rho \mu_I I - \beta BE - \mu_B B 
 \\
 \dfrac{dE}{dt}
 =

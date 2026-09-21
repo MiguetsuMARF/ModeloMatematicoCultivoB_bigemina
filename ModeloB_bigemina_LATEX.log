@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.26)  19 SEP 2026 21:44
+This is pdfTeX, Version 3.141592653-2.6-1.40.28 (MiKTeX 25.12) (preloaded format=pdflatex 2026.7.26)  20 SEP 2026 20:46
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -248,7 +248,7 @@ LaTeX Font Info:    Trying to load font information for U+rsfs on input line 13
 File: ursfs.fd 1998/03/24 rsfs font definition file (jk)
 ) [1
 
-{C:/Users/migue/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2]
+{C:/Users/migue/AppData/Local/MiKTeX/fonts/map/pdftex/pdftex.map}] [2] [3]
 (ModeloB_bigemina_LATEX.aux
 LaTeX Info: Redefining \. on input line 8.
 LaTeX Info: Redefining \% on input line 8.
@@ -259,13 +259,13 @@ L3 programming layer <2025-12-24>
  ***********
  ) 
 Here is how much of TeX's memory you used:
- 3279 strings out of 467871
- 51226 string characters out of 5428443
- 466136 words of memory out of 5000000
- 32157 multiletter control sequences out of 15000+600000
+ 3281 strings out of 467871
+ 51288 string characters out of 5428443
+ 469136 words of memory out of 5000000
+ 32159 multiletter control sequences out of 15000+600000
  636144 words of font info for 73 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 56i,8n,65p,465b,365s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 56i,9n,65p,509b,365s stack positions out of 10000i,1000n,20000p,200000b,200000s
 <C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx10.pfb><C:/Progra
 m Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmbx12.pfb><C:/Program Files/MiKT
 eX/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><C:/Program Files/MiKTeX/fonts/t
@@ -274,10 +274,11 @@ amsfonts/cm/cmmi10.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/
 cmmi8.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr10.pfb><C:
 /Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr12.pfb><C:/Program File
 s/MiKTeX/fonts/type1/public/amsfonts/cm/cmr17.pfb><C:/Program Files/MiKTeX/font
-s/type1/public/amsfonts/cm/cmsy10.pfb>
-Output written on ModeloB_bigemina_LATEX.pdf (2 pages, 119387 bytes).
+s/type1/public/amsfonts/cm/cmsy10.pfb><C:/Program Files/MiKTeX/fonts/type1/publ
+ic/rsfs/rsfs10.pfb>
+Output written on ModeloB_bigemina_LATEX.pdf (3 pages, 130349 bytes).
 PDF statistics:
- 59 PDF objects out of 1000 (max. 8388607)
+ 67 PDF objects out of 1000 (max. 8388607)
  0 named destinations out of 1000 (max. 500000)
  1 words of extra memory for PDF output out of 10000 (max. 10000000)
 
