@@ -1,26 +1,24 @@
-%% Modelo sin tasa de introduccion de babesia infectiva y eritrocitos
+%% Modelo 2, con tasas de muerte adaptadas.
 
 clear;
 clc;
 close all;
 
-syms alfa beta omega gamma rho mu psi B E I dB dE dI
+syms beta muB muE muI rho B E I dB dE dI
 assume( ...
-    alfa >= 0 & ...
     beta >= 0 & ...
-    omega >= 0 & ...
-    gamma >= 0 & ...
     rho >= 0 & ...
-    mu >= 0 & ...
-    psi >= 0 & ...
+    muB >= 0 & ...
+    muE >= 0 & ...
+    muI >= 0 & ...
     B >= 0 & ...
     E >= 0 & ...
     I >= 0 ...
     )
 
-eq1 = alfa - beta.*B.*E - omega.*B + mu.*(rho.*(1 + psi).*I);
-eq2 = gamma - beta.*B.*E - rho.*E;
-eq3 = beta.*B.*E - rho.*(1 + psi).*I;
+eq1 = rho.*muI.*I - beta.*B.*E - muB.*B;
+eq2 = - beta.*B.*E - muE.*E;
+eq3 = beta.*B.*E - muI.*I;
 
 vars = [B, E, I];
 
@@ -42,7 +40,7 @@ nulclina_E = eq2 == 0;
 nulclina_I = eq3 == 0;
 
 params = struct( ...
-'alfa', 0.25, 'beta', 0.005,'omega', 1/3, 'gamma', 0.15, 'rho', 1/25, 'mu', 5, 'psi', 2);
+'beta', 3.3.*(10.^-8),'rho', 2, 'muB', 20, 'muE', 0.01, 'muI', 4);
 
 eq1_num = subs(eq1, params);
 eq2_num = subs(eq2, params);
@@ -137,11 +135,11 @@ view(3); axis tight; grid on;
 camlight headlight; lighting gouraud;
 rotate3d on;
 
-syms alfa beta omega gamma rho mu psi B E I 
+syms beta muB muE muI rho B E I dB dE dI
 
-eq1 = alfa - beta.*B.*E - omega.*B + mu.*(rho.*(1 + psi).*I);
-eq2 = gamma - beta.*B.*E - rho.*E;
-eq3 = beta.*B.*E - rho.*(1 + psi).*I;
+eq1 = rho.*muI.*I - beta.*B.*E - muB.*B;
+eq2 = - beta.*B.*E - muE.*E;
+eq3 = beta.*B.*E - muI.*I;
 
 %%
 
@@ -154,31 +152,29 @@ equil = [Bsol Esol Isol];
 
 disp(equil)
 
-alfa = 0.25;
-beta  = 0.005;
-omega = 1/3;
-gamma = 0.15;
-rho   = 1/25;
-mu    = 5;
-psi   = 2;
+beta = 3.3.*(10.^-8);
+rho = 2;
+muB = 20;
+muE = 0.01;
+muI = 4;
 
 F = @(x) [
-    alfa - beta.*x(1).*x(2) - omega.*x(1) + mu.*(rho.*(1 + psi).*x(3));
-    gamma - beta.*x(1).*x(2) - rho.*x(2);
-    beta.*x(1).*x(2) - rho.*(1 + psi).*x(3)
+    rho.*muI.*x(3) - beta.*x(1).*x(2) - muB.*x(1);
+    - beta.*x(1).*x(2) - muE.*x(2);
+    beta.*x(1).*x(2) - muI.*x(3)
     ];
 
-x0 = [2 500 0];
+x0 = [2*(10^2) 9*(10^8) 1*(10^7)];
 
 xeq = fsolve(F,x0);
 
 %% Analisis de estabilidad de puntos de equilibrio
 
-syms alfa gamma beta omega rho mu psi B E I 
+syms beta muB muE muI rho B E I
 
-eq1 = alfa - beta.*B.*E - omega.*B + mu.*(rho.*(1 + psi).*I);
-eq2 = gamma - beta.*B.*E - rho.*E;
-eq3 = beta.*B.*E - rho.*(1 + psi).*I;
+eq1 = rho.*muI.*I - beta.*B.*E - muB.*B;
+eq2 = - beta.*B.*E - muE.*E;
+eq3 = beta.*B.*E - muI.*I;
 
 Modelo = [eq1; eq2; eq3];
 vars = [B E I];
@@ -207,52 +203,50 @@ eigenvalues_eq2
 
 %%
 
-alfa = 0.25;
-beta  = 0.005;
-omega = 1/3;
-gamma = 0.15;
-rho   = 1/25;
-mu    = 5;
-psi   = 2;
+beta = 3.3.*(10.^-8);
+rho = 2;
+muB = 20;
+muE = 0.01;
+muI = 4;
 
 F = @(x) [
-    alfa - beta.*x(1).*x(2) - omega.*x(1) + mu.*(rho.*(1 + psi).*x(3));
-    gamma - beta.*x(1).*x(2) - rho.*x(2);
-    beta.*x(1).*x(2) - rho.*(1 + psi).*x(3)
+    rho.*muI.*x(3) - beta.*x(1).*x(2) - muB.*x(1);
+    - beta.*x(1).*x(2) - muE.*x(2);
+    beta.*x(1).*x(2) - muI.*x(3)
     ];
 
-x0 = [2 500 0];
+x0 = [2*(10^2) 9*(10^8) 1*(10^7)];
 
 ode = @(t,x)[
-    alfa - beta.*x(1).*x(2) - omega.*x(1) + mu.*(rho.*(1 + psi).*x(3));
-    gamma - beta.*x(1).*x(2) - rho.*x(2);
-    beta.*x(1).*x(2) - rho.*(1 + psi).*x(3)
+    rho.*muI.*x(3) - beta.*x(1).*x(2) - muB.*x(1);
+    - beta.*x(1).*x(2) - muE.*x(2);
+    beta.*x(1).*x(2) - muI.*x(3)
     ];
 
-[t,x] = ode45(ode,[0 500],[0 0 0]);
+[t,x] = ode45(ode,[0 30],[0 0 0]);
 
 plot3(x(:,1),x(:,2),x(:,3),'LineWidth',2)
 
-[t,x] = ode45(ode,[0 500],[0.1 0.1 0.12]);
+[t,x] = ode45(ode,[0 30],[0.1 0.1 0.12]);
 plot3(x(:,1),x(:,2),x(:,3),'r')
 
-[t,x] = ode45(ode,[0 500],[10 100 0.1]);
+[t,x] = ode45(ode,[0 30],[10 100 600]);
 plot3(x(:,1),x(:,2),x(:,3),'g')
 
-[t,x] = ode45(ode,[0 500],[0 50 10]);
+[t,x] = ode45(ode,[0 30],[70 500 10]);
 plot3(x(:,1),x(:,2),x(:,3),'w')
 
-[t,x] = ode45(ode,[0 500],[100 500 10]);
+[t,x] = ode45(ode,[0 30],[100 50 100]);
 plot3(x(:,1),x(:,2),x(:,3),'y')
 
-[t,x] = ode45(ode,[0 500],[100 10 0.1]);
+[t,x] = ode45(ode,[0 30],[100 100 240]);
 plot3(x(:,1),x(:,2),x(:,3),'c')
 
-[t,x] = ode45(ode,[0 500],[1.1 0.01 0.8]);
+[t,x] = ode45(ode,[0 30],[200 200 200]);
 plot3(x(:,1),x(:,2),x(:,3),'k')
 
-[t,x] = ode45(ode,[0 500],[500 0.01 500]);
+[t,x] = ode45(ode,[0 30],[500 100 500]);
 plot3(x(:,1),x(:,2),x(:,3))
 
-[t,x] = ode45(ode,[0 500],[500 0.01 50]);
+[t,x] = ode45(ode,[0 30],[5 0.01 500]);
 plot3(x(:,1),x(:,2),x(:,3))
