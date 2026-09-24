@@ -6,22 +6,20 @@ tic
 
 pro = pro_Create();
 
-Nominal_parameters=[0.25, 0.005, 1/3, 0.15, 1/25, 5, 2] 
+Nominal_parameters=[3.3.*(10.^-8), 20, 0.01, 4, 2] 
 
 
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(1)*0.1 Nominal_parameters(1)*10]), 'alfa');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(2)*0.1 Nominal_parameters(2)*10]), 'beta');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(3)*0.1 Nominal_parameters(3)*10]), 'omega');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(4)*0.1 Nominal_parameters(4)*10]), 'gamma');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(1)*0.1 Nominal_parameters(1)*10]), 'beta');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(2)*0.1 Nominal_parameters(2)*10]), 'muB');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(3)*0.1 Nominal_parameters(3)*10]), 'muE');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(4)*0.1 Nominal_parameters(4)*10]), 'muI');
 pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(5)*0.1 Nominal_parameters(5)*10]), 'rho');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(6)*0.1 Nominal_parameters(6)*10]), 'mu');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(7)*0.1 Nominal_parameters(7)*10]), 'psi');
 
-pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'B0');
-pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'E0');
-pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'I0');
+pro = pro_AddInput(pro, @()pdf_Sobol([0 500000000]), 'B0');
+pro = pro_AddInput(pro, @()pdf_Sobol([0 500000000]), 'E0');
+pro = pro_AddInput(pro, @()pdf_Sobol([0 500000000]), 'I0');
 
-pro = pro_SetModel(pro, @(x)mymodelbabesia(x), 'model');
+pro = pro_SetModel(pro, @(x)mymodelbabesia2PPMAX(x), 'model');
 
 pro.N = 10000;
 
@@ -35,17 +33,37 @@ pro = GSA_Init(pro);
 [S6 eS6 pro] = GSA_GetSy(pro, {6});
 [S7 eS7 pro] = GSA_GetSy(pro, {7});
 [S8 eS8 pro] = GSA_GetSy(pro, {8});
-[S9 eS9 pro] = GSA_GetSy(pro, {9});
-[S10 eS10 pro] = GSA_GetSy(pro, {10});
 
-sensitivity_indexes_vector = [S1 S2 S3 S4 S5 S6 S7 S8 S9 S10];
-parameter_names = {'alfa','beta','omega','gamma','rho','mu','psi','B0','E0','I0'};
+sensitivity_indexes_vector = [S1 S2 S3 S4 S5 S6 S7 S8];
+parameter_names = {'beta','muB','muE','muI','rho','B0','E0','I0'};
 
 [sorted_sotols, index_sorted_sotols]=sort(abs(sensitivity_indexes_vector),'descend');
 
+figure;
+bar(abs(sensitivity_indexes_vector(index_sorted_sotols)));
+ylabel('Sobol sensitivity indices');
+xlabel('Parameters');
+%set(gcf, 'Position', [100 100 300 300]); 
+%axis square
+set(gca,'XTick', [1:8],'XTickLabel',parameter_names((index_sorted_sotols)))
+xlim([0,9]);
+
+Sfast = GSA_FAST_GetSi(pro);
+
+[sorted_eFAST, index_sorted_eFAST]=sort(abs(Sfast),'descend');
+
+figure;
+bar((Sfast(index_sorted_eFAST)));
+ylabel('eFAST sensitivity indices');
+xlabel('Parameters');
+%set(gcf, 'Position', [100 100 300 300]); 
+%axis square
+set(gca,'XTick', [1:8],'XTickLabel',parameter_names(index_sorted_eFAST))
+xlim([0, 9]);
+
 %% Figuras condiciones iniciales
 
-idx_IC = 8:10;
+idx_IC = 6:8;
 
 figure;
 Sobol_IC = abs(sensitivity_indexes_vector(idx_IC));
@@ -83,7 +101,7 @@ end
 
 %% Figuras PARAMETROS
 
-idx_IC = 1:7;
+idx_IC = 1:5;
 
 figure;
 Sobol_IC = abs(sensitivity_indexes_vector(idx_IC));
@@ -94,14 +112,12 @@ b.CData(2,:) = [0.3 0.7 0.4];
 b.CData(3,:) = [0.9 0.5 0.2];
 b.CData(4,:) = [0.5 0.5 0.1];
 b.CData(5,:) = [0.1 0.5 0.5];
-b.CData(6,:) = [0.8 0.5 0.6];
-b.CData(7,:) = [0.2 0.2 0.8];
 set(gca,'XTick',1:7,'XTickLabel',parameter_names(idx_IC));
 ylabel('Indice de sensibilidad de SOBOL');
 xlabel('Parametro');
 title('Sensibilidad de parametros INDICE SOBOL');
-xlim([0 8]);
-for i = 1:7
+xlim([0 6]);
+for i = 1:5
     text(i,Sobol_IC(i),sprintf('%.4f',Sobol_IC(i)),'HorizontalAlignment','center','VerticalAlignment','bottom');
 end
 
@@ -116,14 +132,11 @@ b.CData(2,:) = [0.3 0.7 0.4];
 b.CData(3,:) = [0.9 0.5 0.2];
 b.CData(4,:) = [0.5 0.5 0.1];
 b.CData(5,:) = [0.1 0.5 0.5];
-b.CData(6,:) = [0.8 0.5 0.6];
-b.CData(7,:) = [0.2 0.2 0.8];
 set(gca,'XTick',1:7,'XTickLabel',parameter_names(idx_IC));
 ylabel('eFAST Indice de sensibilidad');
 xlabel('Parametro');
 title('Sensibilidad de condiciones iniciales INDICE eFAST');
-xlim([0 8]);
-for i = 1:7
+xlim([0 6]);
+for i = 1:5
     text(i,eFAST_IC(i),sprintf('%.4f',eFAST_IC(i)),'HorizontalAlignment','center','VerticalAlignment','bottom');
 end
-
