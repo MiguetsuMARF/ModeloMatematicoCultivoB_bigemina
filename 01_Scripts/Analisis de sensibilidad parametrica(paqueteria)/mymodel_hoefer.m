@@ -19,6 +19,7 @@ Gata30 =x(5);
 [t,y] = ode45(@(t,y)dGata3dt(t,y, IL4, alpha, k_g, k),tspan,Gata30);
 
 
-Imaxs=max(I); %0  en tu caso
+Imax =max(y); %0  en tu caso
 % max 
 % time to ----
+end

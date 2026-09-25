@@ -17,9 +17,9 @@ pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(5)*0.1 Nominal_paramete
 pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(6)*0.1 Nominal_parameters(6)*10]), 'mu');
 pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(7)*0.1 Nominal_parameters(7)*10]), 'psi');
 
-pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'B0');
-pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'E0');
-pro = pro_AddInput(pro, @()pdf_Sobol([0 50]), 'I0');
+pro = pro_AddInput(pro, @()pdf_Sobol([0 500]), 'B0');5
+pro = pro_AddInput(pro, @()pdf_Sobol([0 500]), 'E0');
+pro = pro_AddInput(pro, @()pdf_Sobol([0 500]), 'I0');
 
 pro = pro_SetModel(pro, @(x)mymodelbabesia(x), 'model');
 

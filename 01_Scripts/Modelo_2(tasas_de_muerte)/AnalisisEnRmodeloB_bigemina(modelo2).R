@@ -30,16 +30,16 @@ model <- function(t,state,parms){
   })
 }
 
-## Parametros. Todos son dias-1
+## Parametros. Todos son dias-1, definir unidades de variables de estado.
 p <- c(
-  beta = 3.3*(10^-8),
+  beta = 3.3*(10^-8), ### Unidades concentracion-1 por ser parametros de segundo orden.
   muB = 20,
   muE = 0.01,
   muI = 4,
   rho = 2 # proporcion
 )
 
-## Condiciones iniciales
+## Condiciones iniciales, Adaptar a unidades de concentracion. Adaptar al volumen. Esto promueve que sean continuas las unidades.
 s <- c(
   x = 2*(10^2),
   y = 9*(10^8),
@@ -85,7 +85,7 @@ s <- c(x = 1, y = 1, z = 1)
 ## Busqueda numerica de puntos de equilibrio.
 plane(xmin=-5,xmax=5, ymin = -20,ymax = 5)
 first <- newton(s,plot=T)
-second <- newton(c(x = 0, y = -20, z = 0),plot=T)
+second <- newton(c(x = 0, y = -20, z = 0),plot=T) ## Rebaba.
 
 ## Analisis de bifurcaciones de los primeros puntos de equilibrio.
 continue(state=first, parms = p, odes=model, x="beta", step=0.0001, 

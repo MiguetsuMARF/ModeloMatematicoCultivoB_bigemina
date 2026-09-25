@@ -43,7 +43,15 @@ function dydt = babesia(~,y,x)
 
 % Parametros:
 
-alfa = 0.25; beta = 0.005; omega = 1/3; gamma = 0.15; rho = 1/25; mu = 5; psi = 2;
+% alfa = 0.25; beta = 0.005; omega = 1/3; gamma = 0.15; rho = 1/25; mu = 5; psi = 2;
+
+alfa = x(1);
+beta  = x(2);
+omega = x(3);
+gamma = x(4);
+rho   = x(5);
+mu    = x(6);
+psi   = x(7);
 
 dydt = zeros(3,1);
 

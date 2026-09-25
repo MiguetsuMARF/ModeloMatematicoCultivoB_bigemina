@@ -27,7 +27,7 @@ pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(4)*0.1 Nominal_paramete
 
 
 % And now the initial conditions
-pro = pro_AddInput(pro, @()pdf_Sobol([0 3 1]), 'y0');
+pro = pro_AddInput(pro, @()pdf_Sobol([0 3]), 'y0');
 
 
 %Set the model, and name it as 'model', to the project

@@ -5,8 +5,7 @@ beta = x(1);
 muB  = x(2);
 muE = x(3);
 muI = x(4);
-rho   = x(5);
-
+rho = x(5);
 B0 =x(6);
 E0 =x(7);
 I0 =x(8);
@@ -26,11 +25,17 @@ end
 
 function dydt = babesia2(~,y,x)
 
-beta = 3.3.*(10.^-8);
-rho = 2;
-muB = 20;
-muE = 0.01;
-muI = 4;
+%beta = 3.3.*(10.^-8);
+%rho = 2;
+%muB = 20;
+%muE = 0.01;
+%muI = 4;
+
+beta = x(1);
+muB  = x(2);
+muE = x(3);
+muI = x(4);
+rho   = x(5);
 
 dydt = zeros(3,1);
 

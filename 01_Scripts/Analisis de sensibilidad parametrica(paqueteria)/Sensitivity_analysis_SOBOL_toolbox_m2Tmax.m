@@ -6,18 +6,18 @@ tic
 
 pro = pro_Create();
 
-Nominal_parameters=[3.3.*(10.^-8), 20, 0.01, 4, 2] 
+Nominal_parameters=[3.3.*(10.^-8), 20, 0.01, 4, 2, 2.*(10.^2), 9.*(10.^8), 1.*(10.^7)] 
 
 
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(1)*0.1 Nominal_parameters(1)*10]), 'beta');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(2)*0.1 Nominal_parameters(2)*10]), 'muB');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(3)*0.1 Nominal_parameters(3)*10]), 'muE');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(4)*0.1 Nominal_parameters(4)*10]), 'muI');
-pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(5)*0.1 Nominal_parameters(5)*10]), 'rho');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(1)*0.05 Nominal_parameters(1)*50]), 'beta');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(2)*0.05 Nominal_parameters(2)*50]), 'muB');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(3)*0.05 Nominal_parameters(3)*50]), 'muE');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(4)*0.05 Nominal_parameters(4)*50]), 'muI');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(5)*0.05 Nominal_parameters(5)*50]), 'rho');
 
-pro = pro_AddInput(pro, @()pdf_Sobol([0 500000000]), 'B0');
-pro = pro_AddInput(pro, @()pdf_Sobol([0 500000000]), 'E0');
-pro = pro_AddInput(pro, @()pdf_Sobol([0 500000000]), 'I0');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(6)*0.05 Nominal_parameters(5)*50]), 'B0');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(7)*0.05 Nominal_parameters(5)*50]), 'E0');
+pro = pro_AddInput(pro, @()pdf_Sobol([Nominal_parameters(8)*0.05 Nominal_parameters(5)*50]), 'I0');
 
 pro = pro_SetModel(pro, @(x)mymodelbabesia2TMAX(x), 'model');
 
