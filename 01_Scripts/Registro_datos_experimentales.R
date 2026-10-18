@@ -590,4 +590,83 @@ ggplot(subset(cultivoIni, Parasitemia > 0),aes(x = Tiempo, y = Parasitemia))+
   )
 
 Modelo <- read.csv("03_Data/BaseDatosM2")
+Modelo$tiempo <- (Modelo$tiempo/100000)*24
+library(ggplot2)
 
+cultivo$Tiempo <- factor(
+  cultivo$Tiempo,
+  levels = c(0, 24, 48, 72, 96, 120, 144, 168, 192, 216, 240)
+)
+
+ggplot() +
+  geom_boxplot(
+    data = subset(cultivoIni, Parasitemia > 0),
+    aes(x = as.numeric(as.character(Tiempo)),
+        y = Parasitemia,
+        group = Tiempo),
+    fill = "lightblue",
+    color = "black",
+    width = 10,
+    outlier.shape = NA
+  ) +
+  geom_jitter(
+    data = cultivoIni,
+    aes(x = as.numeric(as.character(Tiempo)),
+        y = Parasitemia),
+    width = 2,
+    alpha = 0.35,
+    size = 1.3
+  ) +
+  geom_line(
+    data = Modelo,
+    aes(x = tiempo, y = estimado_parasitemia),
+    color = "red",
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Parasitemia experimental y predicción del modelo",
+    x = "Tiempo de cultivo (h)",
+    y = "Parasitemia (%)"
+  ) +
+  theme_classic()
+
+Modelo2 <- read.csv("03_Data/BaseDatosM2_A")
+Modelo2$tiempo <- (Modelo2$tiempo/1000)*24
+library(ggplot2)
+
+cultivo$Tiempo <- factor(
+  cultivo$Tiempo,
+  levels = c(0, 24, 48, 72, 96, 120, 144, 168, 192, 216, 240)
+)
+
+ggplot() +
+  geom_boxplot(
+    data = subset(cultivoIni, Parasitemia > 0),
+    aes(x = as.numeric(as.character(Tiempo)),
+        y = Parasitemia,
+        group = Tiempo),
+    fill = "lightblue",
+    color = "black",
+    width = 10,
+    outlier.shape = NA
+  ) +
+  geom_jitter(
+    data = cultivoIni,
+    aes(x = as.numeric(as.character(Tiempo)),
+        y = Parasitemia),
+    width = 2,
+    alpha = 0.35,
+    size = 1.3
+  ) +
+  geom_line(
+    data = Modelo2,
+    aes(x = tiempo, y = estimado_parasitemia),
+    color = "red",
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Parasitemia experimental y predicción del modelo",
+    x = "Tiempo de cultivo (h)",
+    y = "Parasitemia (%)"
+  ) +
+  theme_classic()
