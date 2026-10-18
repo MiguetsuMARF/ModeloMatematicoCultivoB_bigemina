@@ -589,3 +589,5 @@ ggplot(subset(cultivoIni, Parasitemia > 0),aes(x = Tiempo, y = Parasitemia))+
     axis.text = element_text(color = "black")
   )
 
+Modelo <- read.csv("03_Data/BaseDatosM2")
+

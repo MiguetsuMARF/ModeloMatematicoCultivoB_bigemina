@@ -32,7 +32,7 @@ model <- function(t,state,parms){
 
 ## Parametros. Todos son dias-1, definir unidades de variables de estado.
 p <- c(
-  beta = 3.3*(10^-8), ### Unidades concentracion-1 por ser parametros de segundo orden.
+  beta = (3.3*(10^-8))*1100, ### Unidades concentracion-1 por ser parametros de segundo orden.
   muB = 20,
   muE = 0.01,
   muI = 4,
@@ -41,9 +41,10 @@ p <- c(
 
 ## Condiciones iniciales, Adaptar a unidades de concentracion. Adaptar al volumen. Esto promueve que sean continuas las unidades.
 s <- c(
-  x = 2*(10^2),
-  y = 9*(10^8),
-  z = 1*(10^7)
+  x = # 2*(10^2),Numero de celulas infectivas en un volumen total de 1100. Por tanto
+    2*(10^2)/1100, # Unidades de celulas/microlitros.
+  y = 9*(10^8)/1100, # Unidades de celulas/microlitros.
+  z = 1*(10^7)/1100 # Unidades de celulas/microlitros.
 )
 
 ## Simulación
@@ -80,6 +81,9 @@ ggplot(data, aes(x = tiempo, y = estimado_parasitemia))+
         title = "Parasitemia en simulacion")
 
 dev.off()
+
+write.csv(data,"03_Data/BaseDatosM2")
+
 s <- c(x = 1, y = 1, z = 1)
 
 ## Busqueda numerica de puntos de equilibrio.
