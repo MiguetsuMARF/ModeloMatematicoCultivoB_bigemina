@@ -321,3 +321,64 @@ ggplot(cultivo, aes(
     color = "Suero (%)"
   ) +
   theme_classic()
+
+
+library(ggplot2)
+
+cultivo$Tiempo <- factor(
+  cultivo$Tiempo,
+  levels = c(48, 72, 96, 120, 144, 168, 192, 216, 240)
+)
+
+ggplot(cultivo, aes(x = Tiempo, y = Parasitemia)) +
+  geom_boxplot(
+    fill = "lightblue",
+    color = "black",
+    width = 0.65,
+    outlier.shape = 16,
+    outlier.size = 1.5
+  ) +
+  geom_jitter(
+    width = 0.12,
+    alpha = 0.45,
+    size = 1.5
+  ) +
+  labs(
+    title = "Distribución de la parasitemia por tiempo",
+    x = "Tiempo de cultivo (h)",
+    y = "Parasitemia (%)"
+  ) +
+  theme_classic() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text = element_text(color = "black")
+  )
+
+cultivo$Tiempo <- factor(
+  cultivo$Tiempo,
+  levels = c(48, 72, 96, 120, 144, 168, 192, 216, 240)
+)
+
+ggplot(subset(cultivo, Parasitemia > 0),aes(x = Tiempo, y = Parasitemia))+
+  geom_boxplot(
+    fill = "lightblue",
+    color = "black",
+    width = 0.65,
+    outlier.shape = 16,
+    outlier.size = 1.5
+  ) +
+  geom_jitter(
+    width = 0.12,
+    alpha = 0.45,
+    size = 1.5
+  ) +
+  labs(
+    title = "Distribución de la parasitemia por tiempo",
+    x = "Tiempo de cultivo (h)",
+    y = "Parasitemia (%)"
+  ) +
+  theme_classic() +
+  theme(
+    plot.title = element_text(hjust = 0.5),
+    axis.text = element_text(color = "black")
+  )
