@@ -32,10 +32,10 @@ model <- function(t,state,parms){
 
 ## Parametros. Todos son dias-1, definir unidades de variables de estado.
 p <- c(
-  beta = (3.3*(10^-8))*1100, ### Unidades concentracion-1 por ser parametros de segundo orden.
-  muB = 20,
+  beta = (3.19*(10^-8))*1100, ### Unidades concentracion-1 por ser parametros de segundo orden.
+  muB = 19.5,
   muE = 0.01,
-  muI = 4,
+  muI = 2,
   rho = 2 # proporcion
 )
 
@@ -48,9 +48,7 @@ s <- c(
 )
 
 ## Simulación
-library(deSolve)
-library(ggplot2)
-times <- seq(0,10,0.0001)
+times <- seq(0,15,0.001)
 out <- ode(
   y=s,
   times=times,
@@ -72,7 +70,7 @@ names(data) <- c(
   "estimado_parasitemia"
 )
 pdf ("02_Images/Simulacionmodelo2.pdf")
-run(tmax = 10, tstep = 0.0001, state = s, parms = p, odes = model)
+run(tmax = 15, tstep = 0.001, state = s, parms = p, odes = model)
 
 ggplot(data, aes(x = tiempo, y = estimado_parasitemia))+
   geom_line()+ 
@@ -83,6 +81,7 @@ ggplot(data, aes(x = tiempo, y = estimado_parasitemia))+
 dev.off()
 
 write.csv(data,"03_Data/BaseDatosM2")
+write.csv(data,"03_Data/BaseDatosM2_A")
 
 s <- c(x = 1, y = 1, z = 1)
 

@@ -670,3 +670,155 @@ ggplot() +
     y = "Parasitemia (%)"
   ) +
   theme_classic()
+
+ggplot() +
+  geom_boxplot(
+    data = subset(cultivoIni, Parasitemia > 0 & Suero == 20),
+    aes(x = as.numeric(as.character(Tiempo)),
+        y = Parasitemia,
+        group = Tiempo),
+    fill = "lightblue",
+    color = "black",
+    width = 10,
+    outlier.shape = NA
+  ) +
+  geom_jitter(
+    data = cultivoIni,
+    aes(x = as.numeric(as.character(Tiempo)),
+        y = Parasitemia),
+    width = 2,
+    alpha = 0.35,
+    size = 1.3
+  ) +
+  geom_line(
+    data = Modelo2,
+    aes(x = tiempo, y = estimado_parasitemia),
+    color = "red",
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Parasitemia experimental y predicción del modelo",
+    subtitle = "Modificacion en muI y beta. Unicamente datos con 20% de SNB",
+    x = "Tiempo de cultivo (h)",
+    y = "Parasitemia (%)"
+  ) +
+  theme_classic()
+
+filt <- cultivoIni$Parasitemia[23:506]
+
+Dif <- data.frame()
+
+for (i in 1:(length(filt)/11)) {
+  d1 <- filt[3+(11*(i-1))] - filt[1+(11*(i-1))]
+  Dif[i,1] <- d1
+  for (j in 1:8) {
+    if(filt[(3+j)+(11*(i-1))] == 0 | filt[(3+(j-1))+(11*(i-1))] == 0){
+      d <- NA
+    } else {
+      d <- filt[(3+j)+(11*(i-1))] - filt[(3+(j-1))+(11*(i-1))]
+    }
+    Dif[i,j+1] <- d
+  }
+}
+
+## A partir de 48, normalizar con respecto al inicial.
+Norm <- data.frame()
+levels <- c(48, 72, 96, 120, 144, 168, 192, 216, 240)
+for (i in 1:(length(filt)/11)) {
+  for (j in 1:8) {
+    if(filt[(3+j)+(11*(i-1))] == 0 | filt[1+(11*(i-1))] == 0){
+      D <- NA
+      } else {
+        D <- filt[(3+j)+(11*(i-1))] - filt[1+(11*(i-1))]
+      }
+    Norm[j+(8*(i-1)),1] <- levels[j]
+    Norm[j+(8*(i-1)),2] <- D
+  }
+}
+names(Norm) <- c(
+  "Tiempo",
+  "ParasitemiaNorm"
+)
+
+ggplot(Norm, aes(x = Tiempo, y = ParasitemiaNorm)) +
+  geom_point()
+
+filt2 <- cultivoIni[23:506,]
+filt3 <- filt2[which(filt2[,2] == 40),4]
+
+Norm2 <- data.frame()
+levels <- c(48, 72, 96, 120, 144, 168, 192, 216, 240)
+for (i in 1:(length(filt3)/11)) {
+  for (j in 1:8) {
+    if(filt3[(3+j)+(11*(i-1))] == 0 | filt3[1+(11*(i-1))] == 0){
+      D <- NA
+    } else {
+      D <- filt3[(3+j)+(11*(i-1))] - filt3[1+(11*(i-1))]
+    }
+    Norm2[j+(8*(i-1)),1] <- levels[j]
+    Norm2[j+(8*(i-1)),2] <- D
+  }
+}
+names(Norm2) <- c(
+  "Tiempo",
+  "ParasitemiaNorm"
+)
+
+ggplot(Norm2, aes(x = Tiempo, y = ParasitemiaNorm)) +
+  geom_boxplot(
+    data = Norm2,
+    aes(x = Tiempo,
+        y = ParasitemiaNorm,
+        group = Tiempo)
+  ) +
+  geom_point()
+
+Modelo2
+for (i in 1:length(Modelo2[,1])) {
+  Modelo2[i,6] <- Modelo2[i,5] - Modelo2[1,5]
+}
+names(Modelo2) <- c(
+  "X",
+  "tiempo",
+  "eritrocitos_sanos",
+  "eritrocitos_infectados",
+  "estimado_parasitemia",
+  "ParasitemiaNorm"
+)
+
+ggplot(Norm, aes(x = Tiempo, y = ParasitemiaNorm)) +
+  geom_boxplot(
+    data = Norm,
+    aes(x = Tiempo,
+        y = ParasitemiaNorm,
+        group = Tiempo)
+  ) +
+  geom_point() +
+  geom_line(
+    data = Modelo2,
+    aes(x = tiempo, y = ParasitemiaNorm),
+    color = "red",
+    linewidth = 1.2
+  ) +
+  labs(
+    title = "Parasitemia experimental normalizada y predicción del modelo",
+    subtitle = "Modificacion en muI y beta. Normalizado con respecto a T0",
+    x = "Tiempo de cultivo (h)",
+    y = "Parasitemia (%)"
+  ) +
+  theme_classic()
+
+ggplot(Norm2, aes(x = Tiempo, y = ParasitemiaNorm)) +
+  geom_boxplot(
+    data = Norm2,
+    aes(x = Tiempo,
+        y = ParasitemiaNorm,
+        group = Tiempo)
+  ) +
+  geom_point() +
+  geom_line(
+    data = Modelo2,
+    aes(x = tiempo, y = ParasitemiaNorm),
+    color = "red",
+    linewidth = 1.2
+  ) 
