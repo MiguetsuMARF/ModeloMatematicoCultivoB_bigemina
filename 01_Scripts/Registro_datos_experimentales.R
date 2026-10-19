@@ -791,7 +791,11 @@ ggplot(Norm, aes(x = Tiempo, y = ParasitemiaNorm)) +
     data = Norm,
     aes(x = Tiempo,
         y = ParasitemiaNorm,
-        group = Tiempo)
+        group = Tiempo),
+    fill = "lightblue",
+    color = "black",
+    width = 10,
+    outlier.shape = NA
   ) +
   geom_point() +
   geom_line(
@@ -813,7 +817,11 @@ ggplot(Norm2, aes(x = Tiempo, y = ParasitemiaNorm)) +
     data = Norm2,
     aes(x = Tiempo,
         y = ParasitemiaNorm,
-        group = Tiempo)
+        group = Tiempo),
+    fill = "lightblue",
+    color = "black",
+    width = 10,
+    outlier.shape = NA
   ) +
   geom_point() +
   geom_line(
