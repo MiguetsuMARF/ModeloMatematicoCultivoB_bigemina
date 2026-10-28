@@ -160,7 +160,9 @@ cultivo <- data.frame(
     "C5B2","C5C2","C5B3","C5C3",
     "C5B4","C5C4","C5B5","C5C5",
     "C6B2","C6C2","C6B3","C6C3",
-    "C6B4","C6C4","C6B5","C6C5"
+    "C6B4","C6C4","C6B5","C6C5",
+    "C6B6","C6C6",
+    "C6B7","C6C7"
   ), each = 9),
   
   Suero = rep(c(
@@ -176,14 +178,15 @@ cultivo <- data.frame(
     20,20,20,20,
     20,20,20,20,
     20,20,20,20,
-    20,20,20,20
+    20,20,20,20,
+    20,20,
+    20,20
   ), each = 9),
-  
   
   
   Tiempo = rep(c(
     48,72,96,120,144,168,192,216,240
-  ), times = 46),
+  ), times = 50),
   
   Parasitemia = c(
     # C1B3
@@ -299,11 +302,17 @@ cultivo <- data.frame(
     # C6B5
     1.75,2.75,3.34,4.09,5.4,5.8,0,0,0,
     # C6C5
-    2.34,3.65,4.4,4.94,5.09,5.65,4.34,3.45,2.5
+    2.34,3.65,4.4,4.94,5.09,5.65,4.34,3.45,2.5,
     
     # C6B6
-    
+    3.2,3.79,4.3,5.4,5.15,5.94,0,0,0,
     # C6C6
+    2.04,2.9,3.04,5.59,4.44,4.15,0,0,0,
+    
+    # C6B7
+    1.75,2.29,3.25,4.3,4.8,3.56,0,0,0,
+    # C6C7
+    1.35,2.09,3.45,4.44,3.9,2.34,0,0,0
   )
 )
 
@@ -403,7 +412,9 @@ cultivoIni <- data.frame(
     "C5B2","C5C2","C5B3","C5C3",
     "C5B4","C5C4","C5B5","C5C5",
     "C6B2","C6C2","C6B3","C6C3",
-    "C6B4","C6C4","C6B5","C6C5"
+    "C6B4","C6C4","C6B5","C6C5",
+    "C6B6","C6C6",
+    "C6B7","C6C7"
   ), each = 11),
   
   Suero = rep(c(
@@ -419,18 +430,19 @@ cultivoIni <- data.frame(
     20,20,20,20,
     20,20,20,20,
     20,20,20,20,
-    20,20,20,20
+    20,20,20,20,
+    20,20,
+    20,20
   ), each = 11),
   
   
   
   Tiempo = rep(c(
     0,24,48,72,96,120,144,168,192,216,240
-  ), times = 46),
+  ), times = 50),
   
   Parasitemia = c(
     # C1B3
-    
     0,0,0,0,1.3,2.3,2.1,2.75,1.9,3.09,1.95,
     # C1C3
     0,0,0,0,2.5,1.95,2.65,2.05,2.4,1.94,2.09,
@@ -552,11 +564,19 @@ cultivoIni <- data.frame(
     # C6B5
     1.7625,0,1.75,2.75,3.34,4.09,5.4,5.8,0,0,0,
     # C6C5
-    1.7625,0,2.34,3.65,4.4,4.94,5.09,5.65,4.34,3.45,2.5
+    1.7625,0,2.34,3.65,4.4,4.94,5.09,5.65,4.34,3.45,2.5,
     
     # C6B6
-    
+    # Este grupo fue subcultivado desde el dia 7 de C6B5 en 1:4. 5.8/4
+    1.45,0,3.2,3.79,4.3,5.4,5.15,5.94,0,0,0,
     # C6C6
+    1.45,0,2.04,2.9,3.04,5.59,4.44,4.15,0,0,0,
+    
+    # C6B7
+    # Este grupo fue subcultivado desde el dia 7 de C6B6 en 1:4. 5.95/4
+    1.4875,0,1.75,2.29,3.25,4.3,4.8,3.56,0,0,0,
+    # C6C7
+    1.4875,0,1.35,2.09,3.45,4.44,3.9,2.34,0,0,0
   )
 )
 
@@ -610,7 +630,7 @@ ggplot() +
     outlier.shape = NA
   ) +
   geom_jitter(
-    data = cultivoIni,
+    data = subset(cultivoIni, Parasitemia > 0),
     aes(x = as.numeric(as.character(Tiempo)),
         y = Parasitemia),
     width = 2,
@@ -651,7 +671,7 @@ ggplot() +
     outlier.shape = NA
   ) +
   geom_jitter(
-    data = cultivoIni,
+    data = subset(cultivoIni, Parasitemia > 0),
     aes(x = as.numeric(as.character(Tiempo)),
         y = Parasitemia),
     width = 2,
@@ -683,7 +703,7 @@ ggplot() +
     outlier.shape = NA
   ) +
   geom_jitter(
-    data = cultivoIni,
+    data = subset(cultivoIni, Parasitemia > 0 & Suero == 20),
     aes(x = as.numeric(as.character(Tiempo)),
         y = Parasitemia),
     width = 2,
