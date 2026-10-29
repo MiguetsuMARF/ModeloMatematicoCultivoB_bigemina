@@ -2,7 +2,7 @@ function dy=S_M_model_Hill_uncoupled(~, y, rS, alpha,  Mcirc, beta, kM, nH)
 
 S =y(1);
 M =y(2);
-
+    
 
 Ass=-rS/8; % carrying capacity
 

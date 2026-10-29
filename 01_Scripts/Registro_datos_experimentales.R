@@ -854,7 +854,7 @@ ggplot(Norm2, aes(x = Tiempo, y = ParasitemiaNorm)) +
 ## Exportar base de datos para optimizacion parametrica
 
 datosbb <- data.frame(
-  Tiempo = c(0,48, 72, 96, 120, 144, 168, 192, 216, 240),
+  Tiempo = c(0/24,48/24, 72/24, 96/24, 120/24, 144/24, 168/24, 192/24, 216/24, 240/24),
   Parasitemia20 = c(
     mean(subset(cultivoIni, Suero == 20 & Tiempo == 0 & Parasitemia > 0)[,4]),
     mean(subset(cultivoIni, Suero == 20 & Tiempo == 48 & Parasitemia > 0)[,4]),
@@ -882,7 +882,7 @@ datosbb <- data.frame(
 )
 
 datosbb2 <- data.frame(
-  Tiempo = c(48, 72, 96, 120, 144, 168, 192, 216, 240),
+  Tiempo = c(48/24, 72/24, 96/24, 120/24, 144/24, 168/24, 192/24, 216/24, 240/24),
   Parasitemia20 = c(
     mean(subset(cultivoIni, Suero == 20 & Tiempo == 48 & Parasitemia > 0)[,4]),
     mean(subset(cultivoIni, Suero == 20 & Tiempo == 72& Parasitemia > 0)[,4]),
@@ -909,3 +909,4 @@ datosbb2 <- data.frame(
 
 write.csv(datosbb, file = "03_Data/Datos_Exp_MeanIni.csv")
 write.csv(datosbb2, file = "03_Data/Datos_Exp_Mean.csv")
+ 
