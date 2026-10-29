@@ -850,3 +850,62 @@ ggplot(Norm2, aes(x = Tiempo, y = ParasitemiaNorm)) +
     color = "red",
     linewidth = 1.2
   ) 
+
+## Exportar base de datos para optimizacion parametrica
+
+datosbb <- data.frame(
+  Tiempo = c(0,48, 72, 96, 120, 144, 168, 192, 216, 240),
+  Parasitemia20 = c(
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 0 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 48 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 72& Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 96 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 120 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 144 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 168 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 192 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 216 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 240 & Parasitemia > 0)[,4])
+  ),
+  Parasitemia40 = c(
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 0 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 48 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 72 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 96 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 120 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 144 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 168 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 192 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 216 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 240 & Parasitemia > 0)[,4])
+  )
+)
+
+datosbb2 <- data.frame(
+  Tiempo = c(48, 72, 96, 120, 144, 168, 192, 216, 240),
+  Parasitemia20 = c(
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 48 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 72& Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 96 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 120 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 144 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 168 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 192 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 216 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 20 & Tiempo == 240 & Parasitemia > 0)[,4])
+  ),
+  Parasitemia40 = c(
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 48 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 72 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 96 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 120 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 144 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 168 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 192 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 216 & Parasitemia > 0)[,4]),
+    mean(subset(cultivoIni, Suero == 40 & Tiempo == 240 & Parasitemia > 0)[,4])
+  )
+)
+
+write.csv(datosbb, file = "03_Data/Datos_Exp_MeanIni.csv")
+write.csv(datosbb2, file = "03_Data/Datos_Exp_Mean.csv")
