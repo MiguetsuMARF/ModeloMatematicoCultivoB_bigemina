@@ -41,10 +41,11 @@ pro = GSA_Init(pro);
 sensitivity_indexes_vector = [S1 S2 S3 S4 S5 S6 S7 S8 S9 S10];
 parameter_names = {'alfa','beta','omega','gamma','rho','mu','psi','B0','E0','I0'};
 
-[sorted_sotols, index_sorted_sotols]=sort(abs(sensitivity_indexes_vector),'descend');
+[sorted_sotols, index_sorted_sotols]=sort(abs(sensitivity_indexes_vector),'descend'); % Se ordena por valor absoluto los indices de sensibildad
 
+% Quitar ABS A TODO
 figure;
-bar(abs(sensitivity_indexes_vector(index_sorted_sotols)));
+bar((sensitivity_indexes_vector(index_sorted_sotols))); %
 ylabel('Sobol sensitivity indices');
 xlabel('Parameters');
 %set(gcf, 'Position', [100 100 300 300]); 
@@ -88,7 +89,7 @@ end
 Sfast = GSA_FAST_GetSi(pro);
 
 figure;
-eFAST_IC = abs(Sfast(idx_IC));
+eFAST_IC = Sfast(idx_IC);
 b = bar(eFAST_IC);
 b.FaceColor = 'flat';
 b.CData(1,:) = [0.2 0.5 0.8];

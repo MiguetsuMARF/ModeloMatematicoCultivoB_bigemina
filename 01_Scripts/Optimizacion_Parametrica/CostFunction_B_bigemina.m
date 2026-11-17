@@ -29,10 +29,7 @@ parasitemia = (y_I./(y_E + y_I)).*100;
 
 y_P_Interpol= interp1(t,parasitemia,t_exp);
 
-Cost_P=(sum((y_P_Interpol-P_exp).^2));
-
-
-Cost=(Cost_P.*8);%./(2*length(t_exp));
+Cost=(sum((y_P_Interpol-P_exp).^2));
 
 end
 

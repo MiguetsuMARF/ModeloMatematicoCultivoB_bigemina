@@ -19,7 +19,7 @@ axis square
 set(gca, 'FontSize', 15)
 
 legend('Parasitemia 20% de suero', 'Parasitemia 40% de suero');
-sgtitle('Lagrou 2003 data: Primary human nasal cells interacting with Pneumococci')
+sgtitle('Promedio de parasitemias experimentales en 10 dias de cultivo in vitro')
 set(gca, 'FontSize', 15)
 
 
@@ -147,6 +147,16 @@ uu=uu+1;
 
 toc
 
+%% Datos a utilizar
+
+P_exp=Datos_Exp_MeanIni(:,jj+1);
+
+indexes=find(~isnan(P_exp));
+P_exp=P_exp(indexes)';
+t_exp=Datos_Exp_MeanIni(indexes,1)';
+
+tiempo=[t_exp(1) t_exp(end)]; % time of integration
+
 figure;
 
 subplot(1,1,1)
@@ -228,7 +238,7 @@ plot(t_Global,P_Global,Colores,'LineWidth',2.5);
 legend('Datos experimentales','Simulacion inicial','Ajuste optimizado','Location','best');
 
 
-sgtitle(['beta=' num2str(beta) ' , muB=' num2str(muB) ' , muE='num2str(muE) ' , muI=' num2str(muI) ' , rho=' num2str(rho) ' , B0=' num2str(B_s) ' , Cost Global=' num2str(CostGlobal)])
+sgtitle(['beta= ' num2str(beta) ' , muB= ' num2str(muB) ' , muE=' num2str(muE) ' , muI= ' num2str(muI) ' , rho= ' num2str(rho) ' , B0= ' num2str(B_s) ' , Cost Global= ' num2str(CostGlobal)])
 
 
 text([1,1], [7,7], titlestr(uu))
